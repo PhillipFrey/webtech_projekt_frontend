@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <!-- Aufruf der HelloWorld-Komponente -->
-    <HelloWorld />
 
-    Hello world
+    <!-- Aufruf der HelloWorld-Komponente -->
+    <hello-world/>
 
   </div>
 </template>
@@ -22,4 +21,3 @@ export default {
 <style>
 
 </style>
-
