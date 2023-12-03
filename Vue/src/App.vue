@@ -2,18 +2,18 @@
   <div id="app">
 
     <!-- Aufruf der HelloWorld-Komponente -->
-    <hello-world/>
+    <HomeView/>
 
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HomeView from "@/views/HomeView.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HomeView
   }
 }
 </script>

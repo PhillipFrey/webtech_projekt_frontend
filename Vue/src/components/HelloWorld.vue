@@ -1,18 +1,20 @@
+import axios from 'axios';
+
 <template>
   <div class="container">
     <h1 class="title">Frontend/Backend Connection</h1>
-    <form @submit.prevent="saveData" class="form">
+    <form @submit.prevent="getData" class="form">
       <div class="form-group">
-        <label for="landField" class="label">Land:</label>
-        <input type="text" id="landField" v-model="landField" class="input">
+        <label for="nameField" class="label">name:</label>
+        <input type="text" id="landField" v-model="nameField" class="input">
       </div>
 
       <div class="form-group">
-        <label for="hauptstadtField" class="label">Hauptstadt:</label>
-        <input type="text" id="hauptstadtField" v-model="hauptstadtField" class="input">
+        <label for="ttField" class="label">total distance:</label>
+        <input type="text" id="hauptstadtField" v-model="ttField" class="input">
       </div>
 
-      <button type="submit" class="button">Save Data</button>
+      <button type="submit" class="button">get Data</button>
     </form>
   </div>
 </template>
@@ -25,17 +27,17 @@ import axios from 'axios';
 export default defineComponent({
   data() {
     return {
-      landField: '',
-      hauptstadtField: '',
+      nameField: '',
+      ttField: '',
     };
   },
   methods: {
-    async saveData() {
+    async getData() {
       try {
-        const endpoint = 'http://localhost:8080/things'; // der Endpunkt, an den die Daten gesendet werden
+        const endpoint = 'http://localhost:8080/'; // der Endpunkt, an den die Daten gesendet werden
         const data = {
-          land: this.landField, // Initialisiert eine Variable für das Land-Eingabefeld
-          hauptstadt: this.hauptstadtField // Initialisiert eine Variable für das Hauptstadt-Eingabefeld
+          name: this.nameField, // Initialisiert eine Variable für das Land-Eingabefeld
+          tt: this.ttField // Initialisiert eine Variable für das Hauptstadt-Eingabefeld
         };
         // Hier wird die POST-Anfrage an das Backend gesendet, um die Daten zu speichern
         const response = await axios.post(endpoint, data);

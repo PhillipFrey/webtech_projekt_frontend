@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import TripOverview from "@/views/TripOverview.vue";
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+<!--    <a href="http://localhost:5173/trips"> Trip Übersicht </a>-->
+    <TripOverview></TripOverview>
   </main>
 </template>
