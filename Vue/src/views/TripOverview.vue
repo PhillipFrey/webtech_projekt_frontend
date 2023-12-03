@@ -5,6 +5,7 @@ type Trip = {
   id: string;
   name: string;
   totalDistance: bigint;
+  markers: bigint;
 }
 let trips: Ref<Trip[]> = ref([]);
 axios
@@ -21,12 +22,14 @@ axios
       <th>ID</th>
       <th>Name</th>
       <th>Total Distance</th>
+      <th>markers</th>
 
     </tr>
     <tr v-for="trip in trips.values()" :key="trip.id">
-      <td>{{ trip.id }}</td>1
+      <td>{{ trip.id }}</td>
       <td>{{ trip.name }}</td>
       <td>{{ trip.totalDistance}}</td>
+      <td>{{trip.markers}}</td>
     </tr>
   </table>
 
