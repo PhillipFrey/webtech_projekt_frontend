@@ -1,14 +1,21 @@
 <template>
-  <div style="height:600px; width:800px" >
-    <l-map class="map"  v-model:zoom="zoom" :center="[47.41322, -1.219482]" :use-global-leaflet="false">
-      <l-tile-layer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          layer-type="base"
-          name="OpenStreetMap"
-      ></l-tile-layer>
-    </l-map>
-  </div>
-  <div></div>
+  <ol-map
+      :loadTilesWhileAnimating="true"
+      :loadTilesWhileInteracting="true"
+      style="height: 400px"
+  >
+    <ol-view
+        ref="view"
+        :center="center"
+        :rotation="rotation"
+        :zoom="zoom"
+        :projection="projection"
+    />
+
+    <ol-tile-layer>
+      <ol-source-osm />
+    </ol-tile-layer>
+  </ol-map>
 
 
   <div>
@@ -28,22 +35,15 @@
   </div>
 </template>
 
-<script>
-import "leaflet/dist/leaflet.css";
-import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
+<script setup>
 
+import {ref} from "vue";
 
-export default {
-  components: {
-    LMap,
-    LTileLayer
-  },
-  data() {
-    return {
-      zoom: 2,
-    };
-  },
-};
+const center = ref([40, 40]);
+const projection = ref("EPSG:4326");
+const zoom = ref(1);
+const rotation = ref(0);
+
 
 </script>
 
