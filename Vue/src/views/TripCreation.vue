@@ -1,27 +1,28 @@
 <template>
-  <ol-map
-      :loadTilesWhileAnimating="true"
-      :loadTilesWhileInteracting="true"
-      style="height: 400px"
-  >
-    <ol-view
-        ref="view"
-        :center="center"
-        :rotation="rotation"
-        :zoom="zoom"
-        :projection="projection"
-    />
+  <ol-map style="height: 800px">
+    <ol-view ref="view" :center="center" :zoom="zoom" />
+    <ol-layer-group :opacity="0.4">
 
-    <ol-tile-layer>
-      <ol-source-osm />
-    </ol-tile-layer>
+      <ol-tile-layer>
+        <ol-source-osm />
+      </ol-tile-layer>
+
+      <ol-tile-layer>
+        <ol-source-tile-json :url="url" crossOrigin="anonymous" ref="tile" />
+        <ol-interaction-pointer @click="addMarker" />
+      </ol-tile-layer>
+
+      <ol-layer-vector>
+        <ol-source-vector :features="markers" />
+      </ol-layer-vector>
+
+    </ol-layer-group>
   </ol-map>
 
 
   <div>
     <div class="info-panel">
       <h2>Trip Name</h2>
-<!--      <p>{{ tripName }}</p>-->
       <div class="info-box">
         <h3>Marker</h3>
       </div>
@@ -36,15 +37,32 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+import markerIcon from "../assets/output-onlinepngtools.png"
+import {Icon, Style} from "ol/style";
+import {Point} from "ol/geom";
+import {Feature} from "ol";
 
-import {ref} from "vue";
+const center = ref([54.1966794, 31.8797732])
+const zoom = ref(6)
+const url = "https://a.tile.openstreetmap.org/4/6/6.png";
 
-const center = ref([40, 40]);
-const projection = ref("EPSG:4326");
-const zoom = ref(1);
-const rotation = ref(0);
+const markers = ref([])
 
-
+const addMarker = (event) => {
+  const coordinates = event.coordinate;
+  const marker = new Feature({
+    geometry: new Point(coordinates),
+    name: 'Marker',
+  });
+  marker.setStyle(new Style({
+    image: new Icon({
+      src: markerIcon,
+      scale: 2,
+    }),
+  }));
+  markers.value.push(marker);
+}
 </script>
 
 <style scoped>
@@ -86,8 +104,6 @@ body{
   margin: 0;
   padding: 0;
 }
-
-
 
 #map{
   width: 100%;
