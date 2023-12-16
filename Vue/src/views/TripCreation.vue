@@ -1,30 +1,41 @@
 <template>
-  <ol-map style="height: 800px">
-    <ol-view ref="view" :center="center" :zoom="zoom" />
-    <ol-layer-group :opacity="0.4">
-
-      <ol-tile-layer>
-        <ol-source-osm />
-      </ol-tile-layer>
-
-      <ol-tile-layer>
-        <ol-source-tile-json :url="url" crossOrigin="anonymous" ref="tile" />
-        <ol-interaction-pointer @click="addMarker" />
-      </ol-tile-layer>
-
-      <ol-layer-vector>
-        <ol-source-vector :features="markers" />
-      </ol-layer-vector>
-
-    </ol-layer-group>
-  </ol-map>
-
-
   <div>
+    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:800px">
+      <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"/>
+
+      <ol-layer-group :opacity="0.4">
+        <ol-tile-layer>
+          <ol-source-osm/>
+        </ol-tile-layer>
+
+        <ol-tile-layer>
+          <ol-source-tile-json :url="url" crossOrigin="anonymous"/>
+        </ol-tile-layer>
+      </ol-layer-group>
+
+      <ol-vector-layer>
+        <ol-source-vector ref="vectors">
+          <ol-interaction-draw @drawstart="drawstart" :type="drawType">
+          </ol-interaction-draw>
+        </ol-source-vector>
+
+        <ol-style>
+          <ol-style-icon :src="markerIcon" :scale="2"></ol-style-icon>
+        </ol-style>
+      </ol-vector-layer>
+
+    </ol-map>
+
     <div class="info-panel">
       <h2>Trip Name</h2>
       <div class="info-box">
         <h3>Marker</h3>
+        <ul>
+          <li v-for="(marker, index) in markers" :key="index">
+            <h4>{{ marker.name }}</h4>
+            <p>Latitude: {{ marker.latitude }}, Longitude: {{ marker.longitude }}</p>
+          </li>
+        </ul>
       </div>
       <div class="info-box">
         <h3>Orte</h3>
@@ -36,32 +47,91 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script>
 import markerIcon from "../assets/output-onlinepngtools.png"
-import {Icon, Style} from "ol/style";
-import {Point} from "ol/geom";
+import {ref} from "vue";
+import axios from 'axios';
+import {Fill, Icon, Stroke, Style} from "ol/style";
 import {Feature} from "ol";
 
-const center = ref([54.1966794, 31.8797732])
-const zoom = ref(6)
-const url = "https://a.tile.openstreetmap.org/4/6/6.png";
+export default {
+  setup() {
+    const center = ref([54.1966794, 31.8797732])
+    const projection = ref('EPSG:4326')
+    const zoom = ref(6)
+    const rotation = ref(0)
+    const url = "https://a.tile.openstreetmap.org/4/6/6.png"
 
-const markers = ref([])
+    const markers = ref([]);
+    const drawType = ref("Point")
 
-const addMarker = (event) => {
-  const coordinates = event.coordinate;
-  const marker = new Feature({
-    geometry: new Point(coordinates),
-    name: 'Marker',
-  });
-  marker.setStyle(new Style({
-    image: new Icon({
-      src: markerIcon,
-      scale: 2,
-    }),
-  }));
-  markers.value.push(marker);
+    const drawedMarker = ref()
+    const vectors = ref(null);
+
+    const coordinates = ref({ latitude: 0, longitude: 0 });
+
+    const sendCoordinates = async () => {
+      const response = await axios.post('http://localhost:8080/apiMarker/markers', {
+        lat: coordinates.value.latitude,
+        lng: coordinates.value.longitude,
+      });
+
+      console.log(response.data);
+    }
+
+    const drawstart = async (event) => {
+      drawedMarker.value = event.feature;
+
+      // Update the coordinates object
+      coordinates.value.latitude = event.feature.getGeometry().getCoordinates()[1];
+      coordinates.value.longitude = event.feature.getGeometry().getCoordinates()[0];
+
+      // Add the new marker to the markers array
+      const newMarker = {
+        name: `Marker ${markers.value.length + 1}`,
+        latitude: coordinates.value.latitude,
+        longitude: coordinates.value.longitude,
+      };
+      markers.value.push(newMarker);
+
+      // Add the new marker to the vector source
+      const markerFeature = new Feature(new Point([newMarker.longitude, newMarker.latitude]));
+      markerFeature.setStyle(new Style({
+        image: new Icon({
+          src: markerIcon,
+          scale: 2,
+        }),
+        text: new Text({
+          text: newMarker.name,
+          offsetY: -10,
+          stroke: new Stroke({
+            color: '#000',
+          }),
+          fill: new Fill({
+            color: '#fff',
+          }),
+        }),
+      }));
+      vectors.value.source.addFeature(markerFeature);
+
+      // Send the coordinates to the backend
+      await sendCoordinates();
+    }
+
+    return {
+      vectors,
+      drawstart,
+      center,
+      projection,
+      zoom,
+      rotation,
+      markerIcon,
+      markers,
+      drawType,
+      url,
+      coordinates
+    }
+  },
 }
 </script>
 
@@ -112,7 +182,7 @@ body{
 }
 
 
-/* Container Design für die Überschrift  */
+/* Container Design für die Überschrift */
 .info-container {
   background-color: #f2f2f2;
   padding: 20px;
