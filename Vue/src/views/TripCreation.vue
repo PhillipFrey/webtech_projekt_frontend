@@ -52,7 +52,9 @@ import markerIcon from "../assets/output-onlinepngtools.png"
 import {ref} from "vue";
 import axios from 'axios';
 import {Fill, Icon, Stroke, Style} from "ol/style";
+import Text from "ol/style/Text";
 import {Feature} from "ol";
+import {Point} from "ol/geom";
 
 export default {
   setup() {
@@ -83,19 +85,22 @@ export default {
       drawedMarker.value = event.feature;
 
       // Update the coordinates object
-      coordinates.value.latitude = event.feature.getGeometry().getCoordinates()[1];
-      coordinates.value.longitude = event.feature.getGeometry().getCoordinates()[0];
+      const markerCoordinates = event.feature.getGeometry().getCoordinates();
+      markerCoordinates.value = {
+        latitude: markerCoordinates[0],
+        longitude: markerCoordinates[1],
+      };
 
       // Add the new marker to the markers array
       const newMarker = {
         name: `Marker ${markers.value.length + 1}`,
-        latitude: coordinates.value.latitude,
-        longitude: coordinates.value.longitude,
+        latitude: markerCoordinates.value.latitude,
+        longitude: markerCoordinates.value.longitude,
       };
       markers.value.push(newMarker);
 
       // Add the new marker to the vector source
-      const markerFeature = new Feature(new Point([newMarker.longitude, newMarker.latitude]));
+      const markerFeature = new Feature(new Point([newMarker.latitude, newMarker.longitude]));
       markerFeature.setStyle(new Style({
         image: new Icon({
           src: markerIcon,
