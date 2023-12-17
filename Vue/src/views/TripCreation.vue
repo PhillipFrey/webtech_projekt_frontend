@@ -72,10 +72,10 @@ export default {
     const drawedMarker = ref()
     const vectors = ref(null);
 
-    onMounted(async () => {
-      const response = await axios.get(`http://localhost:8080/apiTrip/trips/{tripId}`);
-      // Do something with the response data
-    });
+    // onMounted(async () => {
+    //   const response = await axios.get(`http://localhost:8080/apiTrip/trips/{tripId}`);
+    //   // Do something with the response data
+    // });
 
     const drawstart = async (event) => {
       drawedMarker.value = event.feature;
@@ -119,7 +119,7 @@ export default {
         const response = await axios.post(`http://localhost:8080/apiMarker/markers`, {
           lat: markerCoordinates.value.latitude,
           lng: markerCoordinates.value.longitude,
-          tripId: tripId
+          // tripId: tripId
         });
 
         console.log(response.data);
