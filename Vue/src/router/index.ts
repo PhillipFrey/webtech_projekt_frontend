@@ -11,7 +11,7 @@ const router = createRouter({
       component: WelcomePage
     },
     {
-      path:"/TripCreation",
+      path:"/TripCreation/:id",
       name:"tripCreation",
       component: TripCreation
     }

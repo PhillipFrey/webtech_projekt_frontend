@@ -62,7 +62,7 @@ function submitTrip(event: Event) {
       .then((response) => {
         tripName.value = '';
         trips.value = [...trips.value, response.data];
-        router.push('/TripCreation');
+        router.push(`/TripCreation/${response.data.id}`);
       })
       .catch((error) => {
         console.error('There was an error!', error);

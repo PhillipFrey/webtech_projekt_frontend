@@ -47,16 +47,19 @@
 
 <script>
 import markerIcon from "../assets/output-onlinepngtools.png"
-import {ref} from "vue";
+import {ref, onMounted} from "vue";
 import axios from 'axios';
 import {Fill, Icon, Stroke, Style} from "ol/style";
 import Text from "ol/style/Text";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
-
+import {useRoute} from 'vue-router';
 
 export default {
   setup() {
+    const route = useRoute();
+    const tripId = route.params.id;
+
     const center = ref([54.1966794, 31.8797732])
     const projection = ref('EPSG:4326')
     const zoom = ref(6)
@@ -69,7 +72,10 @@ export default {
     const drawedMarker = ref()
     const vectors = ref(null);
 
-
+    onMounted(async () => {
+      const response = await axios.get(`http://localhost:8080/apiTrip/trips/{tripId}`);
+      // Do something with the response data
+    });
 
     const drawstart = async (event) => {
       drawedMarker.value = event.feature;
@@ -110,9 +116,10 @@ export default {
       vectors.value.source.addFeature(markerFeature);
 
       const sendCoordinates = async () => {
-        const response = await axios.post('http://localhost:8080/apiMarker/markers', {
+        const response = await axios.post(`http://localhost:8080/apiMarker/markers`, {
           lat: markerCoordinates.value.latitude,
           lng: markerCoordinates.value.longitude,
+          tripId: tripId
         });
 
         console.log(response.data);
