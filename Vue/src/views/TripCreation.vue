@@ -56,6 +56,7 @@ import Text from "ol/style/Text";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
 
+
 export default {
   setup() {
     const center = ref([54.1966794, 31.8797732])
@@ -70,16 +71,7 @@ export default {
     const drawedMarker = ref()
     const vectors = ref(null);
 
-    const coordinates = ref({ latitude: 0, longitude: 0 });
 
-    const sendCoordinates = async () => {
-      const response = await axios.post('http://localhost:8080/apiMarker/markers', {
-        lat: coordinates.value.latitude,
-        lng: coordinates.value.longitude,
-      });
-
-      console.log(response.data);
-    }
 
     const drawstart = async (event) => {
       drawedMarker.value = event.feature;
@@ -119,6 +111,15 @@ export default {
       }));
       vectors.value.source.addFeature(markerFeature);
 
+      const sendCoordinates = async () => {
+        const response = await axios.post('http://localhost:8080/apiMarker/markers', {
+          lat: markerCoordinates.value.latitude,
+          lng: markerCoordinates.value.longitude,
+        });
+
+        console.log(response.data);
+      }
+
       // Send the coordinates to the backend
       await sendCoordinates();
     }
@@ -133,8 +134,7 @@ export default {
       markerIcon,
       markers,
       drawType,
-      url,
-      coordinates
+      url
     }
   },
 }
