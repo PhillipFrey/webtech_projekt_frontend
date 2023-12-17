@@ -37,9 +37,7 @@
           </li>
         </ul>
       </div>
-      <div class="info-box">
-        <h3>Orte</h3>
-      </div>
+
       <div class="info-box">
         <h3>Gesamtdistanz</h3>
       </div>

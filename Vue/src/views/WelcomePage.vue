@@ -7,25 +7,67 @@
       </p>
     </div>
     <div class="start-journey">
-      <div class="trip-name">
-        <p>Your trip name is: {{ name }}</p>
-        <input v-model="name" placeholder="Enter Trip name">
-        <router-link to="/TripCreation">
-          <button>Create Trip</button>
-        </router-link>
-      </div>
+      <form @submit.prevent="submitTrip">
+        <div class="trip-name">
+          <input v-model="tripName" placeholder="Enter Trip name">
+          <button type="submit">Create Trip</button>
+        </div>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </form>
     </div>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+      <tr v-for="trip in trips.values()" :key="trip.id">
+        <td>{{ trip.id }}</td>
+        <td>{{ trip.name }}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      name: ''
-    };
+<script setup lang="ts">
+import axios from 'axios';
+import { Ref, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+type Trip = {
+  id: string;
+  name: string;
+}
+
+let trips: Ref<Trip[]> = ref([]);
+let tripName: Ref<string> = ref('');
+let errorMessage: Ref<string> = ref('');
+let router = useRouter();
+
+axios
+    .get('http://localhost:8080/apiTrip/trips')
+    .then((response) => {
+      trips.value = response.data;
+    });
+
+function submitTrip(event: Event) {
+  event.preventDefault();
+
+  if (tripName.value === '') {
+    errorMessage.value = 'Please provide a name to create a trip';
+    return;
   }
-};
+
+  axios
+      .post('http://localhost:8080/apiTrip/trips', { name: tripName.value })
+      .then((response) => {
+        tripName.value = '';
+        trips.value = [...trips.value, response.data];
+        router.push('/TripCreation');
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+      });
+}
 </script>
 
 <style scoped>
@@ -83,5 +125,10 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 15px;
 }
 </style>
