@@ -8,9 +8,6 @@
           <ol-source-osm/>
         </ol-tile-layer>
 
-        <ol-tile-layer>
-          <ol-source-tile-json :url="url" crossOrigin="anonymous"/>
-        </ol-tile-layer>
       </ol-layer-group>
 
       <ol-vector-layer>
@@ -47,7 +44,7 @@
 
 <script>
 import markerIcon from "../assets/output-onlinepngtools.png"
-import {ref, onMounted} from "vue";
+import {ref} from "vue";
 import axios from 'axios';
 import {Fill, Icon, Stroke, Style} from "ol/style";
 import Text from "ol/style/Text";
@@ -108,10 +105,10 @@ export default {
       vectors.value.source.addFeature(markerFeature);
 
       const sendCoordinates = async () => {
-        const response = await axios.post(`http://localhost:8080/apiMarker/markers`, {
+        const response = await axios.post(`http://localhost:8080/apiMarker/markers?tripId=${tripId}`, {
           lat: markerCoordinates.value.latitude,
           lng: markerCoordinates.value.longitude,
-          // tripId: tripId
+          tripId: tripId
         });
 
         console.log(response.data);
