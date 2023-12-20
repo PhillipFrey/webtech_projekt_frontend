@@ -72,22 +72,15 @@ export default {
     const drawedMarker = ref()
     const vectors = ref(null);
 
-    // onMounted(async () => {
-    //   const response = await axios.get(`http://localhost:8080/apiTrip/trips/{tripId}`);
-    //   // Do something with the response data
-    // });
-
     const drawstart = async (event) => {
       drawedMarker.value = event.feature;
 
-      // Update the coordinates object
       const markerCoordinates = event.feature.getGeometry().getCoordinates();
       markerCoordinates.value = {
         latitude: markerCoordinates[0],
         longitude: markerCoordinates[1],
       };
 
-      // Add the new marker to the markers array
       const newMarker = {
         name: `Marker ${markers.value.length + 1}`,
         latitude: markerCoordinates.value.latitude,
@@ -95,7 +88,6 @@ export default {
       };
       markers.value.push(newMarker);
 
-      // Add the new marker to the vector source
       const markerFeature = new Feature(new Point([newMarker.latitude, newMarker.longitude]));
       markerFeature.setStyle(new Style({
         image: new Icon({
@@ -125,7 +117,6 @@ export default {
         console.log(response.data);
       }
 
-      // Send the coordinates to the backend
       await sendCoordinates();
     }
 

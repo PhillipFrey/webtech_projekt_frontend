@@ -53,8 +53,7 @@ function submitTrip(event: Event) {
   event.preventDefault();
 
   if (tripName.value === '') {
-    errorMessage.value = 'Please provide a name to create a trip';
-    return;
+    return errorMessage.value = 'Please provide a name to create a trip';
   }
 
   axios
