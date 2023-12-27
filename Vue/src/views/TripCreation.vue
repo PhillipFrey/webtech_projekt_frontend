@@ -1,194 +1,160 @@
 <template>
-  <div>
-    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:800px">
-      <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"/>
 
-      <ol-layer-group :opacity="0.4">
-        <ol-tile-layer>
-          <ol-source-osm/>
-        </ol-tile-layer>
+  <div id="map"></div>
 
-      </ol-layer-group>
 
-      <ol-vector-layer>
-        <ol-source-vector ref="vectors">
-          <ol-interaction-draw @drawstart="drawstart" :type="drawType">
-          </ol-interaction-draw>
-        </ol-source-vector>
-
-        <ol-style>
-          <ol-style-icon :src="markerIcon" :scale="2"></ol-style-icon>
-        </ol-style>
-      </ol-vector-layer>
-
-    </ol-map>
-
-    <div class="info-panel">
-      <h2>Trip Name</h2>
-      <div class="info-box">
-        <h3>Marker</h3>
-        <ul>
-          <li v-for="(marker, index) in markers" :key="index">
-            <h4>{{ marker.name }}</h4>
-            <p>Latitude: {{ marker.latitude }}, Longitude: {{ marker.longitude }}</p>
-          </li>
-        </ul>
-      </div>
-
-      <div class="info-box">
-        <h3>Gesamtdistanz</h3>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
-import markerIcon from "../assets/output-onlinepngtools.png"
-import {ref} from "vue";
-import axios from 'axios';
-import {Fill, Icon, Stroke, Style} from "ol/style";
-import Text from "ol/style/Text";
-import {Feature} from "ol";
-import {Point} from "ol/geom";
-import {useRoute} from 'vue-router';
+const apiKey = "";
 
-export default {
-  setup() {
-    const route = useRoute();
-    const tripId = route.params.id;
+const map = new ol.Map({
+  target: "map"
+});
 
-    const center = ref([54.1966794, 31.8797732])
-    const projection = ref('EPSG:4326')
-    const zoom = ref(6)
-    const rotation = ref(0)
-    const url = "https://a.tile.openstreetmap.org/4/6/6.png"
+const view = new ol.View({
 
-    const markers = ref([]);
-    const drawType = ref("Point")
+  center: ol.proj.fromLonLat([-79.3832, 43.6532]), // Toronto
 
-    const drawedMarker = ref()
-    const vectors = ref(null);
+  zoom: 13
+});
+map.setView(view);
 
-    const drawstart = async (event) => {
-      drawedMarker.value = event.feature;
+let startLayer, endLayer, routeLayer;
+function addCircleLayers() {
 
-      const markerCoordinates = event.feature.getGeometry().getCoordinates();
-      markerCoordinates.value = {
-        latitude: markerCoordinates[0],
-        longitude: markerCoordinates[1],
-      };
+  startLayer = new ol.layer.Vector({
+    style: new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 6,
+        fill: new ol.style.Fill({ color: "white" }),
+        stroke: new ol.style.Stroke({ color: "black", width: 2 })
+      })
+    })
+  });
+  map.addLayer(startLayer);
+  endLayer = new ol.layer.Vector({
+    style: new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 7,
+        fill: new ol.style.Fill({ color: "black" }),
+        stroke: new ol.style.Stroke({ color: "white", width: 2 })
+      })
+    })
+  });
 
-      const newMarker = {
-        name: `Marker ${markers.value.length + 1}`,
-        latitude: markerCoordinates.value.latitude,
-        longitude: markerCoordinates.value.longitude,
-      };
-      markers.value.push(newMarker);
+  map.addLayer(endLayer);
 
-      const markerFeature = new Feature(new Point([newMarker.latitude, newMarker.longitude]));
-      markerFeature.setStyle(new Style({
-        image: new Icon({
-          src: markerIcon,
-          scale: 2,
-        }),
-        text: new Text({
-          text: newMarker.name,
-          offsetY: -10,
-          stroke: new Stroke({
-            color: '#000',
-          }),
-          fill: new Fill({
-            color: '#fff',
-          }),
-        }),
-      }));
-      vectors.value.source.addFeature(markerFeature);
-
-      const sendCoordinates = async () => {
-        const response = await axios.post(`http://localhost:8080/apiMarker/markers?tripId=${tripId}`, {
-          lat: markerCoordinates.value.latitude,
-          lng: markerCoordinates.value.longitude,
-          tripId: tripId
-        });
-
-        console.log(response.data);
-      }
-
-      await sendCoordinates();
-    }
-
-    return {
-      vectors,
-      drawstart,
-      center,
-      projection,
-      zoom,
-      rotation,
-      markerIcon,
-      markers,
-      drawType,
-      url
-    }
-  },
 }
+
+let currentStep = "start";
+let startCoords, endCoords;
+
+const geojson = new ol.format.GeoJSON({
+  defaultDataProjection: "EPSG:4326",
+  featureProjection: "EPSG:3857"
+});
+
+function updateRoute() {
+
+  const authentication = arcgisRest.ApiKeyManager.fromKey(apiKey);
+
+  arcgisRest
+
+      .solveRoute({
+        stops: [startCoords, endCoords],
+        authentication
+      })
+
+      .then((response) => {
+
+        routeLayer.setSource(
+            new ol.source.Vector({
+              features: geojson.readFeatures(response.routes.geoJson)
+            })
+        );
+
+      })
+
+      .catch((error) => {
+        alert("There was a problem using the geocoder. See the console for details.");
+        console.error(error);
+      });
+}
+
+map.on("click", (e) => {
+
+  const coordinates = ol.proj.transform(e.coordinate, "EPSG:3857", "EPSG:4326");
+  const point = {
+    type: "Point",
+    coordinates
+  };
+
+  if (currentStep === "start") {
+
+    startLayer.setSource(
+        new ol.source.Vector({
+          features: geojson.readFeatures(point)
+        })
+    );
+    startCoords = coordinates;
+
+    // clear endCoords and route if they were already set
+    if (endCoords) {
+      endCoords = null;
+      endLayer.getSource().clear();
+
+      routeLayer.getSource().clear();
+
+    }
+    currentStep = "end";
+  } else {
+
+    endLayer.setSource(
+        new ol.source.Vector({
+          features: geojson.readFeatures(point)
+        })
+    );
+    endCoords = coordinates;
+    currentStep = "start";
+
+    updateRoute(startCoords, endCoords);
+  }
+});
+
+function addRouteLayer() {
+  routeLayer = new ol.layer.Vector({
+    style: new ol.style.Style({
+      stroke: new ol.style.Stroke({ color: "hsl(205, 100%, 50%)", width: 4, opacity: 0.6 })
+    })
+  });
+
+  map.addLayer(routeLayer);
+}
+
+
+
+
+const basemapId = "arcgis/navigation";
+const basemapURL = `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/${basemapId}?token=${apiKey}`;
+
+olms.apply(map, basemapURL)
+    .then(function (map) {
+      addCircleLayers();
+      addRouteLayer();
+    });
 </script>
 
-<style scoped>
-/* Stile für das Layout */
-.map {
-  grid-column: 1 / 2;
-  height: 90vh;
-}
-
-.info-panel {
-  grid-column: 2 / 3;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Stile für die grauen Info-Boxen */
-.info-box {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-}
-
-p {
-  margin: 0;
-}
-body{
-
-  margin: 0;
-  padding: 0;
-}
-
-#map{
-  width: 100%;
-  height: 70vh;
-
-}
-
-
-/* Container Design für die Überschrift */
-.info-container {
-  background-color: #f2f2f2;
-  padding: 20px;
-  text-align: center;
-}
-
-.content {
-  max-width: 80%;
-  margin: 0 auto;
+<style>
+html,
+body,
+#map {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #323232;
 }
 </style>
