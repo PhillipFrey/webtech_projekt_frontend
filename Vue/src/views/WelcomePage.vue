@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h1>Welcome to our Trip Planner!</h1>
+    <header>
+      <h1>Welcome to our Trip Planner!</h1>
+    </header>
     <div class="description-box">
       <p class="description">
         Our trip planner offers you the opportunity to plan your journey, calculate routes from A to B, place markers on the map, and conveniently save your destinations! Start your journey by giving your trip a name
@@ -22,7 +24,7 @@
       </tr>
       <tr v-for="trip in trips.values()" :key="trip.id">
         <td>{{ trip.id }}</td>
-        <td>{{ trip.name }}</td>
+        <td><a :href="`/TripCreation/${trip.id}`">{{ trip.name }}</a></td>
       </tr>
     </table>
   </div>
@@ -70,6 +72,16 @@ function submitTrip(event: Event) {
 </script>
 
 <style scoped>
+body {
+  background-color: #ffffff;
+  font-family: 'Arial', sans-serif;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -77,8 +89,6 @@ function submitTrip(event: Event) {
   justify-content: center;
   height: 100vh;
   padding: 20px;
-  font-family: 'Arial', sans-serif;
-  text-align: center;
 }
 
 h1 {
@@ -92,8 +102,6 @@ h1 {
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  /* Box eingrenzen */
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
@@ -129,5 +137,38 @@ button:hover {
 .error-message {
   color: red;
   margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+td:last-child a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+td:last-child a:hover {
+  color: #45a049;
+}
+
+td:first-child {
+  pointer-events: none;
 }
 </style>
