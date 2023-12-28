@@ -16,9 +16,8 @@
           </ol-interaction-draw>
         </ol-source-vector>
 
-        <ol-style>
-          <ol-style-icon :src="markerIcon" :scale="2"></ol-style-icon>
-        </ol-style>
+        <ol-style-stroke :color="ffcc33" :width="1000"/>
+        <ol-style-fill :color="ffff00"/>
       </ol-vector-layer>
 
     </ol-map>
@@ -51,8 +50,9 @@ import Text from "ol/style/Text";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
 import {useRoute} from 'vue-router';
-import { GeoJSON } from 'ol/format';
-import { arcgisToGeoJSON } from "@terraformer/arcgis"
+import {GeoJSON} from 'ol/format';
+import {arcgisToGeoJSON} from "@terraformer/arcgis"
+import VectorSource from "ol/source/Vector";
 
 
 export default {
@@ -121,7 +121,7 @@ export default {
     }
 
     const fetchRouteData = async () => {
-      const apiKey = "api_key"; // Replace with your actual API key
+      const apiKey = "AAPK267d8f8239ba4c4ea6f1d11ccb66f3be-igLWm-oKrFu2ur2n-x1AchBswzmfDfHldAD5VsJshRDfXl0CBnis3BOQ6GZ6dYP"; // Replace with your actual API key
       const stops = '13.412668331172636,52.524281329093746;13.413925073742385,52.523431296486166' // Replace with your actual stops
 
       try {
@@ -131,6 +131,8 @@ export default {
         console.log(routeData)
         const geoJsonRoutes = arcgisToGeoJSON(routeData.routes);
         console.log(geoJsonRoutes)
+
+        vectors.value.source = new VectorSource();
 
         const geoJsonFormat = new GeoJSON();
         const routeFeature = geoJsonFormat.readFeatures(geoJsonRoutes);
