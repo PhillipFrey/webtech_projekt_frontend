@@ -51,6 +51,8 @@ import Text from "ol/style/Text";
 import {Feature} from "ol";
 import {Point} from "ol/geom";
 import {useRoute} from 'vue-router';
+import { GeoJSON } from 'ol/format';
+import { arcgisToGeoJSON } from "@terraformer/arcgis"
 
 export default {
   setup() {
@@ -117,6 +119,34 @@ export default {
       await sendCoordinates();
     }
 
+    const fetchRouteData = async () => {
+      const apiKey = 'AAPK99929237779041a2a49b655125e7f792SFfAfVbH4BZwhiY8z0KW9rVC0zu0soFMijwug9UAyhacnE4kNntKPdx-N2wnE9yB'; // Replace with your actual API key
+      const stops = '13.412668331172636,52.524281329093746;13.413925073742385,52.523431296486166'; // Replace with your actual stops
+
+      try {
+        const response = await axios.get(`https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?f=pjson&token=${apiKey}&stops=${stops}`);
+        console.log(response)
+        const routeData = response.data;
+
+        const routeGeometry = routeData.routes;
+
+        arcgisToGeoJSON({
+          routeGeometry
+        })
+
+        const geoJsonFormat = new GeoJSON();
+        const routeFeature = geoJsonFormat.readFeatures(routeGeometry);
+
+        vectors.value.source.addFeature(routeFeature);
+
+        this.$refs.view.fit(vectors.value.source.getExtent());
+      } catch (error) {
+        console.error('Failed to fetch route data:', error);
+      }
+    }
+
+    fetchRouteData();
+
     return {
       vectors,
       drawstart,
@@ -132,6 +162,8 @@ export default {
   },
 }
 </script>
+
+
 
 <style scoped>
 /* Stile für das Layout */
