@@ -118,11 +118,17 @@ export default {
       }
 
       await sendCoordinates();
+
+      // Check if at least two markers have been placed
+      if (markers.value.length >= 2) {
+        await fetchRouteData(markers.value);
+      }
     }
 
     const fetchRouteData = async () => {
-      const apiKey = "AAPK267d8f8239ba4c4ea6f1d11ccb66f3be-igLWm-oKrFu2ur2n-x1AchBswzmfDfHldAD5VsJshRDfXl0CBnis3BOQ6GZ6dYP"; // Replace with your actual API key
-      const stops = '13.412668331172636,52.524281329093746;13.413925073742385,52.523431296486166' // Replace with your actual stops
+      const apiKey = "api_key"; // Replace with your actual API key
+      // Convert markers to string format required by the API
+      const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
       try {
         const response = await axios.get(`https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?f=json&token=${apiKey}&stops=${stops}`);
@@ -148,8 +154,6 @@ export default {
         console.error('Failed to fetch route data:', error);
       }
     }
-
-    fetchRouteData();
 
     return {
       vectors,
