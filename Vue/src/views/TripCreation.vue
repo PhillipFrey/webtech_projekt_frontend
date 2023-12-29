@@ -30,6 +30,7 @@
           <li v-for="(marker, index) in markers" :key="index">
             <h4>{{ marker.name }}</h4>
             <p>Latitude: {{ marker.latitude }}, Longitude: {{ marker.longitude }}</p>
+            <button @click="deleteMarker(index)">Delete</button>
           </li>
         </ul>
       </div>
@@ -59,15 +60,17 @@ export default {
   setup() {
     const route = useRoute();
     const tripId = route.params.id;
-
-    const center = ref([54.1966794, 31.8797732])
+    const center = ref([13.563296821630995, 52.49659015553675])
     const projection = ref('EPSG:4326')
     const zoom = ref(6)
     const rotation = ref(0)
     const url = "https://a.tile.openstreetmap.org/4/6/6.png"
-
+    const markerFeatures = ref([]);
     const markers = ref([]);
     const drawType = ref("Point")
+    const markersId = ref([])
+    const routeFeatureRef = ref(null);
+
 
     const drawedMarker = ref()
     const vectors = ref(null);
@@ -89,10 +92,11 @@ export default {
       markers.value.push(newMarker);
 
       const markerFeature = new Feature(new Point([newMarker.latitude, newMarker.longitude]));
+
       markerFeature.setStyle(new Style({
         image: new Icon({
           src: markerIcon,
-          scale: 2,
+          scale: 1,
         }),
         text: new Text({
           text: newMarker.name,
@@ -106,6 +110,8 @@ export default {
         }),
       }));
       vectors.value.source.addFeature(markerFeature);
+      markerFeatures.value.push(markerFeature);
+
 
       const sendCoordinates = async () => {
         const response = await axios.post(`http://localhost:8080/apiMarker/markers?tripId=${tripId}`, {
@@ -113,39 +119,38 @@ export default {
           lng: markerCoordinates.value.longitude,
           tripId: tripId
         });
+        markersId.value.push(response.data.id);
 
-        console.log(response.data);
       }
 
       await sendCoordinates();
 
-      // Check if at least two markers have been placed
       if (markers.value.length >= 2) {
         await fetchRouteData(markers.value);
       }
+
     }
 
     const fetchRouteData = async () => {
-      const apiKey = "api_key"; // Replace with your actual API key
+      const apiKey = "AAPK875c4cfc8ef74d53b6410c01faf21657owa1Pp6ZJaMO-dkfVRW0G7ulWeiWzVJ1nPPMavr9mLViODjBHA6n1sMboT-f9ezc"; // Replace with your actual API key
       // Convert markers to string format required by the API
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
       try {
         const response = await axios.get(`https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?f=json&token=${apiKey}&stops=${stops}`);
-        console.log(response)
+
         const routeData = response.data;
-        console.log(routeData)
+
         const geoJsonRoutes = arcgisToGeoJSON(routeData.routes);
-        console.log(geoJsonRoutes)
 
         vectors.value.source = new VectorSource();
 
         const geoJsonFormat = new GeoJSON();
-        const routeFeature = geoJsonFormat.readFeatures(geoJsonRoutes);
-        console.log(routeFeature)
+        routeFeatureRef.value = geoJsonFormat.readFeatures(geoJsonRoutes);
+
 
         if (vectors.value && vectors.value.source) {
-          routeFeature.forEach(feature => {
+          routeFeatureRef.value.forEach(feature => {
             vectors.value.source.addFeature(feature);
           });
         }
@@ -153,7 +158,36 @@ export default {
       } catch (error) {
         console.error('Failed to fetch route data:', error);
       }
-    }
+    };
+
+
+    const deleteMarker = async (key) => {
+      const markerId = markersId.value[key];
+      markersId.value.splice(key, 1);
+      markers.value.splice(key, 1);
+
+      // Get the corresponding markerFeature
+      const markerFeatureToRemove = markerFeatures.value[key];
+
+      // Remove the markerFeature from the vector source
+      vectors.value.source.removeFeature(markerFeatureToRemove);
+
+      // Remove the markerFeature from the markerFeatures array
+      markerFeatures.value.splice(key, 1);
+
+      await axios.delete(`http://localhost:8080/apiMarker/markers/${markerId}`);
+
+      // Remove the route feature
+      if (routeFeatureRef.value) {
+        routeFeatureRef.value.forEach(feature => {
+          vectors.value.source.removeFeature(feature);
+        });
+      }
+
+      await fetchRouteData(markers.value);
+    };
+
+
 
     return {
       vectors,
@@ -165,7 +199,9 @@ export default {
       markerIcon,
       markers,
       drawType,
-      url
+      url,
+      tripId,
+      deleteMarker
     }
   },
 }
