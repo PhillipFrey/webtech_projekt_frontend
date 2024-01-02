@@ -48,10 +48,6 @@
 import markerIcon from "../assets/output-onlinepngtools.png"
 import {ref} from "vue";
 import axios from 'axios';
-import {Fill, Stroke, Style} from "ol/style";
-import Text from "ol/style/Text";
-import {Feature} from "ol";
-import {Point} from "ol/geom";
 import {useRoute} from 'vue-router';
 import {GeoJSON} from 'ol/format';
 import {arcgisToGeoJSON} from "@terraformer/arcgis"
@@ -71,11 +67,17 @@ export default {
     const drawType = ref("Point")
     const markersId = ref([])
     const routeFeatureRef = ref([]);
-    const drawedMarker = ref()
-    const vectors = ref(null);
+    const vectors = ref([]);
+    // const drawedMarker = ref()
 
     const drawstart = async (event) => {
-      drawedMarker.value = event.feature;
+
+      // vectors.value.source.addFeatures(event)
+      setTimeout(() => {
+        for(let feature of vectors.value.source.getFeatures()){
+          markerFeatures.value.push(feature)
+          markerFeatures.value.splice(0,1)
+      }}, 0);
 
       const markerCoordinates = event.feature.getGeometry().getCoordinates();
       markerCoordinates.value = {
@@ -90,28 +92,8 @@ export default {
         longitude: markerCoordinates.value.longitude,
       };
 
+      markerFeatures.value.push(vectors.value.source.addFeatures(event))
       markers.value.push(newMarker);
-
-      const markerFeature = new Feature(new Point([newMarker.latitude, newMarker.longitude]));
-      markerFeature.set('id', newMarker.id); // Set the unique ID
-      markerFeature.set('name', newMarker.name);
-
-      const markerStyle = new Style({
-        text: new Text({
-          text: markerFeature.get('name'),
-          offsetY: 10,
-          stroke: new Stroke({
-            color: '#000',
-          }),
-          fill: new Fill({
-            color: '#fff',
-          }),
-        }),
-      });
-
-      markerFeature.setStyle(markerStyle);
-      vectors.value.source.addFeature(markerFeature);
-      markerFeatures.value.push(markerFeature);
 
       const sendCoordinates = async () => {
         const response = await axios.post(`http://localhost:8080/apiMarker/markers?tripId=${tripId}`, {
@@ -126,7 +108,6 @@ export default {
     };
 
     const calculateRoute = async () => {
-      // Call the fetchRouteData method when the button is clicked
       if (markers.value.length >= 2) {
         await fetchRouteData();
       } else {
@@ -136,7 +117,7 @@ export default {
 
     const fetchRouteData = async () => {
       await clearRoutes()
-      const apiKey = "my_api_key"; // Replace with your actual API key
+      const apiKey = "AAPK4e4d1c87a7984e03bcca5b6f9aa38f04bMC6fsbiq7az2KBkuu0PwWhXBpDleU7QQSDIxI7Koc6kESnM50gy1FyXIMQjCPu9"; // Replace with your actual API key
       // Convert markers to string format required by the API
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
@@ -150,7 +131,6 @@ export default {
 
         const geoJsonFormat = new GeoJSON();
         routeFeatureRef.value = geoJsonFormat.readFeatures(geoJsonRoutes);
-        console.log(routeFeatureRef.value)
 
 
         if (vectors.value && vectors.value.source) {
@@ -165,16 +145,13 @@ export default {
     };
 
     const deleteMarker = async (key) => {
+      await clearRoutes()
+
       const markerId = markersId.value[key];
 
-      // Remove the marker from the markersId and markers arrays
       markersId.value.splice(key, 1);
-      const deletedMarker = markers.value.splice(key, 1)[0];
-
-      // Find the corresponding marker feature and remove it from the vectors
-      const markerFeatureToRemove = markerFeatures.value.find(feature => feature.get('id') === deletedMarker.id);
-      vectors.value.source.removeFeature(markerFeatureToRemove);
-      markerFeatures.value.splice(markerFeatures.value.indexOf(markerFeatureToRemove), 1);
+      vectors.value.source.removeFeature(markerFeatures.value[key])
+      markerFeatures.value.splice(key, 1)
 
       try {
         // Delete the marker on the server
@@ -182,29 +159,21 @@ export default {
       } catch (error) {
         console.error('Error deleting marker:', error);
       }
-
-      // Clear and recalculate routes
-      // await clearAndRecalculateRoutes();
     };
 
 
     const clearRoutes = async () => {
-      console.log(routeFeatureRef.value)
+
       // Clear all existing route features from the vector source
       if (routeFeatureRef.value) {
         routeFeatureRef.value.forEach(feature => {
           vectors.value.source.removeFeature(feature);
         });
         // Clear the routeFeatureRef array
-        console.log(routeFeatureRef.value)
+
         routeFeatureRef.value = [];
       }
-      console.log(routeFeatureRef.value)
 
-      // Fetch new route data if there are at least 2 markers
-      // if (markers.value.length >= 2) {
-      //   await fetchRouteData(markers.value);
-      // }
     };
 
     return {
