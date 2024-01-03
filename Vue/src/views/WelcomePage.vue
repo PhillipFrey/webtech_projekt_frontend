@@ -25,6 +25,8 @@
       <tr v-for="trip in trips.values()" :key="trip.id">
         <td>{{ trip.id }}</td>
         <td><a :href="`/TripCreation/${trip.id}`">{{ trip.name }}</a></td>
+        <input v-model="newTripName" placeholder="Enter New Trip Name">
+        <button @click="updateTripName(newTripName, trip.id)">Update Trip Name</button>
       </tr>
     </table>
   </div>
@@ -44,12 +46,28 @@ let trips: Ref<Trip[]> = ref([]);
 let tripName: Ref<string> = ref('');
 let errorMessage: Ref<string> = ref('');
 let router = useRouter();
+let newTripName: Ref<string> = ref('');
 
 axios
     .get('http://localhost:8080/apiTrip/trips')
     .then((response) => {
       trips.value = response.data;
     });
+
+function updateTripName(newTripName, tripId) {
+  axios
+      .patch(`http://localhost:8080/apiTrip/trips/${tripId}`, newTripName)
+      .then((response) => {
+        const updatedTripIndex = trips.value.findIndex(trip => trip.id === tripId);
+        if (updatedTripIndex !== -1) {
+          trips.value[updatedTripIndex] = response.data;
+        }
+      })
+      .catch((error) => {
+        console.error('There was an error updating the trip name!', error);
+      });
+}
+
 
 function submitTrip(event: Event) {
   event.preventDefault();

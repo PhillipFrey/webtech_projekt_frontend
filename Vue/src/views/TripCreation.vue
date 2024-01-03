@@ -22,7 +22,7 @@
 
     <div class="info-panel">
       <h2>
-        <div>Trip Name</div>
+        <div>{{ tripName }}</div>
         <button @click="calculateRoute" class="calculate-route-button">Calculate Route</button>
       </h2>
 
@@ -72,6 +72,7 @@ export default {
     const vectors = ref([]);
     const trips = ref([])
     let totalLength = ref(0);
+    const tripName = ref("");
 
     //load data from database, based on the id in the url
     onMounted(async () => {
@@ -90,6 +91,7 @@ export default {
               markers.value.push(newMarker);
             }
             totalLength.value = trips.value.totalDistance
+            tripName.value = trips.value.name
           })
       console.log(trips)
       console.log(markers)
@@ -239,7 +241,8 @@ export default {
       tripId,
       deleteMarker,
       calculateRoute,
-      totalLength
+      totalLength,
+      tripName
     }
   },
 }
