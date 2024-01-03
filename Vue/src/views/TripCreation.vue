@@ -18,6 +18,27 @@
         <ol-style-stroke :color="ffcc33" :width="1000"/>
         <ol-style-fill :color="ffff00"/>
       </ol-vector-layer>
+
+      <ol-vector-layer>
+        <ol-source-vector>
+          <ol-feature v-for="(marker, index) in markers" :key="index">
+            <ol-geom-point :coordinates="[
+                marker.latitude,
+                marker.longitude,
+              ]"></ol-geom-point>
+            <ol-style>
+              <ol-style-circle :radius="10">
+                <ol-style-fill :color="ffff00"></ol-style-fill>
+                <ol-style-stroke
+                    :color="ffcc33"
+                    :width="10"
+                ></ol-style-stroke>
+                <ol-style-text :text="marker.name" ></ol-style-text>
+              </ol-style-circle>
+            </ol-style>
+          </ol-feature>
+        </ol-source-vector>
+      </ol-vector-layer>
     </ol-map>
 
     <div class="info-panel">
@@ -104,7 +125,7 @@ export default {
         for(let feature of vectors.value.source.getFeatures()){
           markerFeatures.value.push(feature)
           markerFeatures.value.splice(0,1)
-      }}, 0);
+        }}, 0);
 
       const markerCoordinates = event.feature.getGeometry().getCoordinates();
       markerCoordinates.value = {
@@ -196,23 +217,33 @@ export default {
     }
 
     const deleteMarker = async (key) => {
-      await clearRoutes()
-      console.log(markers)
+      await clearRoutes();
+      console.log(markers);
+      console.log(key);
 
-      const markerId = markersId.value[key];
-      markers.value.splice(key,1);
+      let ids = markers.value.map(marker => marker.id);
+      console.log(ids);
+
+      // Find the marker to delete
+      let markerToDelete = markers.value[key];
+      console.log(markerToDelete);
+
+      // Remove the marker from markers.value
+      markers.value.splice(key, 1);
       markersId.value.splice(key, 1);
-      vectors.value.source.removeFeature(markerFeatures.value[key])
-      markerFeatures.value.splice(key, 1)
+      vectors.value.source.removeFeature(markerFeatures.value[key]);
+      markerFeatures.value.splice(key, 1);
 
+      // Use the id of the deleted marker
+      let id = markerToDelete.id;
       try {
-        await axios.delete(`http://localhost:8080/apiMarker/markers/${markerId}`);
+        await axios.delete(`http://localhost:8080/apiMarker/markers/${id}`);
       } catch (error) {
         console.error('Error deleting marker:', error);
       }
     };
 
-    console.log(markers)
+
 
 
     const clearRoutes = async () => {
