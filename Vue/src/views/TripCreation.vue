@@ -117,8 +117,7 @@ export default {
 
     const fetchRouteData = async () => {
       await clearRoutes()
-      const apiKey = "AAPK4e4d1c87a7984e03bcca5b6f9aa38f04bMC6fsbiq7az2KBkuu0PwWhXBpDleU7QQSDIxI7Koc6kESnM50gy1FyXIMQjCPu9"; // Replace with your actual API key
-      // Convert markers to string format required by the API
+      const apiKey = "AAPKaf256b39ba654d9e88826e7216119274pZQso1TFb2pbGILffBRAPj0zNmP_9PihPLKSObD0LTVaLTNhYGN3uUVR6kYM8xMS"; // Replace with your actual API key
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
       try {
@@ -146,15 +145,15 @@ export default {
 
     const deleteMarker = async (key) => {
       await clearRoutes()
+      console.log(markers)
 
       const markerId = markersId.value[key];
-
+      markers.value.splice(key,1);
       markersId.value.splice(key, 1);
       vectors.value.source.removeFeature(markerFeatures.value[key])
       markerFeatures.value.splice(key, 1)
 
       try {
-        // Delete the marker on the server
         await axios.delete(`http://localhost:8080/apiMarker/markers/${markerId}`);
       } catch (error) {
         console.error('Error deleting marker:', error);
@@ -164,12 +163,10 @@ export default {
 
     const clearRoutes = async () => {
 
-      // Clear all existing route features from the vector source
       if (routeFeatureRef.value) {
         routeFeatureRef.value.forEach(feature => {
           vectors.value.source.removeFeature(feature);
         });
-        // Clear the routeFeatureRef array
 
         routeFeatureRef.value = [];
       }
