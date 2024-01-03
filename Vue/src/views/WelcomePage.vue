@@ -94,10 +94,11 @@ header {
 h1 {
   font-size: 2.5rem;
   margin-bottom: 20px;
+  color: #000000;
 }
 
 .description-box {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
@@ -109,6 +110,7 @@ h1 {
 
 p.description {
   margin: 0;
+  color: #000000;
 }
 
 input {
@@ -124,7 +126,7 @@ button {
   font-size: 1rem;
   border: none;
   border-radius: 5px;
-  background-color: #4CAF50;
+  background-color:  #45a049;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -140,32 +142,40 @@ button:hover {
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
+  width: 80%;
+  border-collapse: separate;
+  border-spacing: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  border: none;
+  padding: 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #fafafa;
 }
 
-
 td:last-child a {
-  display: block;
-  height: 100%;
-  width: 100%;
-  color: inherit;
+  display: inline-block;
+  color:  #45a049;
   text-decoration: none;
-  cursor: pointer;
   transition: color 0.3s ease;
 }
 
 td:last-child a:hover {
-  color: #45a049;
+  color: #3e7939;
 }
 
 td:first-child {
