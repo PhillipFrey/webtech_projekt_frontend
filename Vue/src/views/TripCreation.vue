@@ -22,7 +22,7 @@
 
     <div class="info-panel">
       <h2>
-        Trip Name
+        <div>Trip Name</div>
         <button @click="calculateRoute" class="calculate-route-button">Calculate Route</button>
       </h2>
 
@@ -48,7 +48,7 @@
 
 <script>
 import markerIcon from "../assets/output-onlinepngtools.png"
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import axios from 'axios';
 import {useRoute} from 'vue-router';
 import {GeoJSON} from 'ol/format';
@@ -70,7 +70,30 @@ export default {
     const markersId = ref([])
     const routeFeatureRef = ref([]);
     const vectors = ref([]);
+    const trips = ref([])
     let totalLength = ref(0);
+
+    //load data from database, based on the id in the url
+    onMounted(async () => {
+      let path = window.location.pathname;
+      let id = path.substring(path.lastIndexOf('/') + 1);
+      await axios.get(`http://localhost:8080/apiTrip/trips/${id}`)
+          .then((response) => {
+            trips.value = response.data;
+            for(let dataFromDb of trips.value.markers){
+              const newMarker = {
+                id: dataFromDb.id, // Use the id from the database
+                name: `Marker ${markers.value.length + 1}`,
+                latitude: dataFromDb.lat, // Use the latitude from the database
+                longitude: dataFromDb.lng, // Use the longitude from the database
+              };
+              markers.value.push(newMarker);
+            }
+            totalLength.value = trips.value.totalDistance
+          })
+      console.log(trips)
+      console.log(markers)
+    })
 
     const drawstart = async (event) => {
 
@@ -119,7 +142,7 @@ export default {
 
     const fetchRouteData = async () => {
       await clearRoutes()
-      const apiKey = "AAPKd183aa21114b448b86bad9ce71630890FD11ysNoJUGYYzQeLRkDIxcLQvTXJBWX0u-OeakRNB3M9sFibsReYCV5UJDUThHC"; // Replace with your actual API key
+      const apiKey = "api_key"; // Replace with your actual API key
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
       try {
@@ -127,13 +150,13 @@ export default {
 
         const routeData = response.data;
 
-        console.log(routeData.directions[0].summary.totalLength)
-
         let routeDistance = routeData.directions[0].summary.totalLength;
 
         routeDistance = Math.round(routeDistance * 100)/100;
 
         totalLength.value = routeDistance
+
+        await saveTotalDistance(routeDistance)
 
         const geoJsonRoutes = arcgisToGeoJSON(routeData.routes);
 
@@ -152,6 +175,23 @@ export default {
       }
     };
 
+    const saveTotalDistance = async(totalDistance) => {
+      let path = window.location.pathname;
+      let id = path.substring(path.lastIndexOf('/') + 1);
+      try {
+        await axios
+            .post(`http://localhost:8080/apiTrip/trips/${id}`, totalDistance, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+            .then(() => {
+              totalDistance = 0;
+            });
+      } catch (error) {
+        console.error('Error saving total distance: ', error);
+      }
+    }
 
     const deleteMarker = async (key) => {
       await clearRoutes()
