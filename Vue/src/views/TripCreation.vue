@@ -39,6 +39,8 @@
 
       <div class="info-box">
         <h3>Gesamtdistanz</h3>
+        <div v-if="markers.length < 2" >Total Length in Kilometers: 0</div>
+        <div v-else> Total Length in Kilometers: {{ totalLength }}</div>
       </div>
     </div>
   </div>
@@ -68,7 +70,7 @@ export default {
     const markersId = ref([])
     const routeFeatureRef = ref([]);
     const vectors = ref([]);
-    // const drawedMarker = ref()
+    let totalLength = ref(0);
 
     const drawstart = async (event) => {
 
@@ -117,7 +119,7 @@ export default {
 
     const fetchRouteData = async () => {
       await clearRoutes()
-      const apiKey = "AAPKaf256b39ba654d9e88826e7216119274pZQso1TFb2pbGILffBRAPj0zNmP_9PihPLKSObD0LTVaLTNhYGN3uUVR6kYM8xMS"; // Replace with your actual API key
+      const apiKey = "AAPKd183aa21114b448b86bad9ce71630890FD11ysNoJUGYYzQeLRkDIxcLQvTXJBWX0u-OeakRNB3M9sFibsReYCV5UJDUThHC"; // Replace with your actual API key
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
       try {
@@ -125,8 +127,15 @@ export default {
 
         const routeData = response.data;
 
-        const geoJsonRoutes = arcgisToGeoJSON(routeData.routes);
+        console.log(routeData.directions[0].summary.totalLength)
 
+        let routeDistance = routeData.directions[0].summary.totalLength;
+
+        routeDistance = Math.round(routeDistance * 100)/100;
+
+        totalLength.value = routeDistance
+
+        const geoJsonRoutes = arcgisToGeoJSON(routeData.routes);
 
         const geoJsonFormat = new GeoJSON();
         routeFeatureRef.value = geoJsonFormat.readFeatures(geoJsonRoutes);
@@ -142,6 +151,7 @@ export default {
         console.error('Failed to fetch route data:', error);
       }
     };
+
 
     const deleteMarker = async (key) => {
       await clearRoutes()
@@ -159,6 +169,8 @@ export default {
         console.error('Error deleting marker:', error);
       }
     };
+
+    console.log(markers)
 
 
     const clearRoutes = async () => {
@@ -186,7 +198,8 @@ export default {
       url,
       tripId,
       deleteMarker,
-      calculateRoute
+      calculateRoute,
+      totalLength
     }
   },
 }
