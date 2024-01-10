@@ -14,10 +14,9 @@
           <ol-interaction-draw @drawstart="drawstart" :type="drawType">
           </ol-interaction-draw>
         </ol-source-vector>
-
-        <ol-style-stroke :color="ffcc33" :width="1000"/>
-        <ol-style-fill :color="ffff00"/>
       </ol-vector-layer>
+
+
 
       <ol-vector-layer>
         <ol-source-vector>
@@ -53,7 +52,7 @@
           <li v-for="(marker, index) in markers" :key="index">
             <h4>{{ marker.name }}</h4>
             <p>Latitude: {{ marker.latitude }}, Longitude: {{ marker.longitude }}</p>
-            <button @click="deleteMarker(index)">Delete</button>
+            <button @click="deleteMarker(marker)">Delete</button>
           </li>
         </ul>
       </div>
@@ -95,28 +94,30 @@ export default {
     let totalLength = ref(0);
     const tripName = ref("");
 
-    //load data from database, based on the id in the url
-    onMounted(async () => {
+    const getMarkerData = async () => {
       let path = window.location.pathname;
       let id = path.substring(path.lastIndexOf('/') + 1);
       await axios.get(`http://localhost:8080/apiTrip/trips/${id}`)
-          .then((response) => {
-            trips.value = response.data;
-            for(let dataFromDb of trips.value.markers){
-              const newMarker = {
-                id: dataFromDb.id, // Use the id from the database
-                name: `Marker ${markers.value.length + 1}`,
-                latitude: dataFromDb.lat, // Use the latitude from the database
-                longitude: dataFromDb.lng, // Use the longitude from the database
-              };
-              markers.value.push(newMarker);
-            }
-            totalLength.value = trips.value.totalDistance
-            tripName.value = trips.value.name
-          })
-      console.log(trips)
-      console.log(markers)
+          .then((response) => { trips.value = response.data })}
+
+    //load data from database, based on the id in the url
+    onMounted(async () => {
+      await getMarkerData();
+      for(let dataFromDb of trips.value.markers){
+        const newMarker = {
+          id: dataFromDb.id,
+          name: `Marker ${markers.value.length + 1}`,
+          latitude: dataFromDb.lat,
+          longitude: dataFromDb.lng,
+        };
+        markers.value.push(newMarker);
+        markersId.value.push(dataFromDb.id)
+      }
+      totalLength.value = trips.value.totalDistance
+      tripName.value = trips.value.name
     })
+    console.log(markers)
+    console.log(markersId.value)
 
     const drawstart = async (event) => {
 
@@ -133,16 +134,6 @@ export default {
         longitude: markerCoordinates[1],
       };
 
-      const newMarker = {
-        id: markersId.value.length + 1, // Assign a unique ID
-        name: `Marker ${markers.value.length + 1}`,
-        latitude: markerCoordinates.value.latitude,
-        longitude: markerCoordinates.value.longitude,
-      };
-
-      markerFeatures.value.push(vectors.value.source.addFeatures(event))
-      markers.value.push(newMarker);
-
       const sendCoordinates = async () => {
         const response = await axios.post(`http://localhost:8080/apiMarker/markers?tripId=${tripId}`, {
           lat: markerCoordinates.value.latitude,
@@ -150,8 +141,19 @@ export default {
           tripId: tripId
         });
         markersId.value.push(response.data.id);
+        const newMarker = {
+          id: response.data.id,
+          name: `Marker ${markers.value.length + 1}`,
+          latitude: markerCoordinates.value.latitude,
+          longitude: markerCoordinates.value.longitude,
+        };
+
+        // markerFeatures.value.push(vectors.value.source.addFeatures(event))
+        markers.value.push(newMarker);
       };
 
+      console.log(markers)
+      console.log(markersId)
       await sendCoordinates();
     };
 
@@ -216,34 +218,24 @@ export default {
       }
     }
 
-    const deleteMarker = async (key) => {
+    const deleteMarker = async (marker) => {
+      vectors.value.source.clear();
       await clearRoutes();
       console.log(markers);
-      console.log(key);
+      console.log(marker);
 
-      let ids = markers.value.map(marker => marker.id);
-      console.log(ids);
+      const index = markers.value.findIndex(m => m.id === marker.id);
+      if (index !== -1) {
+        markers.value.splice(index, 1);
+        vectors.value.source.removeFeature(markerFeatures.value[index]);
+      }
 
-      // Find the marker to delete
-      let markerToDelete = markers.value[key];
-      console.log(markerToDelete);
-
-      // Remove the marker from markers.value
-      markers.value.splice(key, 1);
-      markersId.value.splice(key, 1);
-      vectors.value.source.removeFeature(markerFeatures.value[key]);
-      markerFeatures.value.splice(key, 1);
-
-      // Use the id of the deleted marker
-      let id = markerToDelete.id;
       try {
-        await axios.delete(`http://localhost:8080/apiMarker/markers/${id}`);
+        await axios.delete(`http://localhost:8080/apiMarker/markers/${marker.id}`);
       } catch (error) {
         console.error('Error deleting marker:', error);
       }
     };
-
-
 
 
     const clearRoutes = async () => {

@@ -1,60 +1,70 @@
 <template>
   <div class="container">
-    <header>
-      <h1>Welcome to our Trip Planner!</h1>
-    </header>
+    <!-- Header-Bereich -->
+    <div class="header">
+      <!-- Logo und Überschrift im Header -->
+      <div class="logo">
+        <img src="../assets/Logo.png" alt="CompanyLogo" />
+        <h1>Trip Planer</h1>
+      </div>
+    </div>
+
+    <!-- Beschreibung -->
     <div class="description-box">
+      <img src="../assets/Logo.png" alt="CompanyLogo" class="logo-small" />
       <p class="description">
-        Our trip planner offers you the opportunity to plan your journey, calculate routes from A to B, place markers on the map, and conveniently save your destinations! Start your journey by giving your trip a name
+        We offer you the opportunity to plan your journey, calculate routes, place markers and conveniently save your destinations! Start with your first trip
       </p>
     </div>
-    <div class="start-journey">
-      <form @submit.prevent="submitTrip">
-        <div class="trip-name">
-          <!-- Bereich für den Trip-Namen -->
-          <input v-model="tripName" placeholder="Enter Trip name">
-          <button type="submit">Create Trip</button>
-        </div>
-        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-        <!-- Fehlermeldung, die angezeigt wird, wenn ein Fehler auftritt -->
-      </form>
-    </div>
-    <table>
-      <!-- Eine Tabelle für die Trip-Namen und IDs -->
-      <thead>
-      <!-- Der Kopf der Tabelle -->
-      <tr>
-        <!-- Tabellenüberschriften -->
-        <th>ID</th>
-        <th>Name</th>
-      </tr>
-      </thead>
-      <tbody>
-      <!-- Der Hauptinhalt der Tabelle -->
-      <!-- Eine Schleife, die über alle Trips iteriert und eine Zeile für jeden Trip erstellt -->
-      <tr v-for="trip in trips" :key="trip.id">
 
-        <!-- Einträge für jede Trip-ID und Trip-Namen -->
-        <td>{{ trip.id }}</td>
-        <td>
-          <!-- Ein Container für den Trip-Namen mit Bearbeitungsfunktion -->
-          <div class="trip-name-container">
-            <span>{{ trip.name }}</span>
-            <!--Icon zum Bearbeiten des Trip-Namens -->
-            <span class="edit-icon" @click="openPopup(trip.id)">&#9881;</span>
-            <!-- Popup für die Bearbeitung des Trip-Namens -->
-            <div :id="'popup-' + trip.id" class="popup">
-              <input v-model="editedTripNames[trip.id]" placeholder="Enter New Trip Name">
-              <!-- Ein Eingabefeld für den neuen Trip-Namen -->
-              <button @click="updateTripName(trip.id)">Update Trip Name</button>
-              <!-- Ein Button, um den Trip-Namen zu aktualisieren -->
+    <!-- Formular für Trip-Erstellung -->
+    <form @submit.prevent="submitTrip" class="create-trip-form">
+      <div class="trip-name">
+        <input v-model="tripName" placeholder="Enter Trip name">
+        <button type="submit">Create Trip</button>
+      </div>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </form>
+
+    <!-- Wrapper für die Tabelle und das Formular//----------- Hier hats klick gemacht !!!!!!!!!-->
+
+      <!-- Tabelle für Trip-Namen und IDs -->
+      <table>
+        <!-- Der Kopf der Tabelle -->
+        <thead>
+        <tr>
+          <!-- Tabellenüberschriften -->
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+        </thead>
+        <!-- Der Hauptinhalt der Tabelle -->
+        <tbody>
+        <!-- Eine Schleife, die über alle Trips iteriert und eine Zeile für jeden Trip erstellt -->
+        <tr v-for="trip in trips" :key="trip.id">
+          <!-- Einträge für jede Trip-ID und Trip-Namen -->
+          <td>{{ trip.id }}</td>
+          <td>
+            <!-- Ein Container für den Trip-Namen mit Bearbeitungsfunktion -->
+            <div class="trip-name-container">
+              <router-link :to="`/TripCreation/${trip.id}`">{{ trip.name }}</router-link>  <!-- Hier wird der Name inkls. attribut abgespeichert  -->
+
+
+              <!-- Icon zum Bearbeiten des Trip-Namens -->
+              <span class="edit-icon" @click="openPopup(trip.id)">&#9881;</span>
+              <!-- Popup für die Bearbeitung des Trip-Namens -->
+              <div :id="'popup-' + trip.id" class="popup">
+                <input v-model="editedTripNames[trip.id]" placeholder="Enter New Trip Name">
+                <!-- Ein Eingabefeld für den neuen Trip-Namen -->
+                <button @click="updateTripName(trip.id)">Update Trip Name</button>
+                <!-- Ein Button, um den Trip-Namen zu aktualisieren -->
+              </div>
             </div>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -83,18 +93,24 @@ axios
       trips.value = response.data;
     });
 
-// Funktion, um ein Popup für die Bearbeitung eines Trip-Namens zu öffnen
+// Funktion, um ein Popup für die Bearbeitung eines Trip-Namens zu öffnen und zu schließen
 function openPopup(tripId: string) {
-  if (!editedTripNames[tripId]) {
-    editedTripNames[tripId] = '';
-  }
   const popup = document.getElementById(`popup-${tripId}`);
   if (popup) {
-    popup.classList.add('active'); //'active' zeigt das PopUp an
+    if (popup.classList.contains('active')) {
+      popup.classList.remove('active');
+    } else {
+      // Schließe alle anderen Popups vor dem Öffnen des aktuellen Popups
+      const popups = document.querySelectorAll('.popup');
+      popups.forEach((popup) => {
+        popup.classList.remove('active');
+      });
+      popup.classList.add('active');
+    }
   }
 }
 
-// Funktion zum Aktualisieren des Trip-Namens
+
 function updateTripName(tripId: string) {
   const newTripName = editedTripNames[tripId].trim();
   if (newTripName === '') {
@@ -102,17 +118,13 @@ function updateTripName(tripId: string) {
   }
   const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
   if (tripIndex !== -1) {
-    trips.value[tripIndex].name = newTripName;
 
-    //Active Befehl nochmal besprechen, PopUp lässt sich nämlich nicht schließen
-    //aktualisiert den TripNamen auf dem Server
+
     axios
         .patch(`http://localhost:8080/apiTrip/trips/${tripId}`, { name: newTripName })
         .then(() => {
-          const popup = document.getElementById(`popup-${tripId}`);
-          if (popup) {
-            popup.classList.remove('active'); // Entfernt die 'active'-Klasse, um das Popup zu schließen
-          }
+          trips.value[tripIndex].name = newTripName;
+          closePopup(tripId);
         })
         .catch((error) => {
           console.error('Error updating trip name:', error);
@@ -121,7 +133,14 @@ function updateTripName(tripId: string) {
 }
 
 
-//Evtl. muss hier die
+// Funktion zum Schließen des Popups
+function closePopup(tripId: string) {
+  const popup = document.getElementById(`popup-${tripId}`);
+  if (popup) {
+    popup.classList.remove('active'); // Entfernt die 'active'-Klasse, um das Popup zu schließen
+  }
+}
+
 // Funktion zum Erstellen eines neuen Trips
 function submitTrip(event: Event) {
   event.preventDefault();
@@ -145,8 +164,9 @@ function submitTrip(event: Event) {
 
 
 <style scoped>
+
 body {
-  background-color: #ffffff;
+  background-color: #d90000;
   font-family: 'Arial', sans-serif;
 }
 
@@ -158,28 +178,44 @@ header {
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   height: 100vh;
   padding: 20px;
 }
 
 h1 {
+  font-family: monospace;
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: #000000;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  color: #45a049;
 }
 
 .description-box {
-  background-color: #ffffff;
+  background: linear-gradient(to bottom, #ffffff, #eeeeee);
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ccc;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  z-index: 999;
+ /* transition: transform 0.3s ease;*(
+
+  /* Stile für den Text */
+  font-family: monospace;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
 }
+
+/*.description-box:hover {
+  transform: scale(1.02);
+}*/
 
 p.description {
   margin: 0;
@@ -202,11 +238,6 @@ button {
   background-color:  #45a049;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #45a049;
 }
 
 .error-message {
@@ -214,35 +245,76 @@ button:hover {
   margin-bottom: 15px;
 }
 
+.create-trip-form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.trip-name input {
+  padding: 8px;
+  margin-bottom: 0;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.create-trip-form button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #45a049;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Hinzugefügter Hover-Effekt */
+
+}
+
+.create-trip-form button:hover {
+  transform: scale(1.02); /* Vergrößere den Button beim Hover */
+}
+
+
+/* Gesamtes Tabellen-Design */
 table {
+  font-family: monospace;
+  background-color: white;
   width: 80%;
+  margin-left: 200px;
   border-collapse: separate;
   border-spacing: 0;
   max-height: 200px;
   overflow-y: auto;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
 }
 
-th, td {
+/* Einheitliches Design für Tabellenzellen */
+table,
+th,
+td {
   border: none;
   padding: 15px;
   text-align: left;
+
+
+
 }
 
+/*Tabellen Überschrift*/
 th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
 
-tr:nth-child(even) {
-  background-color: #fafafa;
-}
-
 td:last-child a {
   display: inline-block;
-  color:  #45a049;
+  color: #45a049;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -255,24 +327,102 @@ td:first-child {
   pointer-events: none;
 }
 
-/* Stil für das Bearbeitungssymbol */
+/* Weitere Stile für das Bearbeitungssymbol und das Popup-Fenster */
 .edit-icon {
   cursor: pointer;
   color: #45a049;
   margin-left: 5px;
 }
 
-/* Stil für das Popup-Fenster */
 .popup {
   display: none;
   position: absolute;
-  background-color: #fff;
+  background-color: #f2f2f2;
   border: 1px solid #ccc;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 5px;
   z-index: 999;
+
 }
 
 .popup.active {
   display: block;
+
 }
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(23, 23, 23, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  transition: background-color 0.3s ease; /* Smooth color transition */
+
+}
+
+
+.header .logo {
+  display: flex;
+  align-items: center;
+}
+
+.header .logo img {
+  height: 60px;
+  margin-right: 10px;
+}
+
+.header a {
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.header a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.header a.active {
+  color: #000000;
+}
+
+.container {
+  background-color: #ffffff;
+  margin-top: 60px;
+  z-index: 1;
+}
+
+.trip-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: monospace;
+}
+
+.trip-name input {
+  margin-bottom: 10px;
+  font-family: monospace;
+}
+
+
+.logo-small {
+  height: 100px;
+  margin-right: 10px;
+}
+
+.description-box {
+  display: flex;
+  align-items: center;
+}
+
+
 </style>

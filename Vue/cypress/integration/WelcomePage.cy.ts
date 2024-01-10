@@ -1,4 +1,6 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it } from 'vitest'
+
+
 
 describe('Creat a Trip in WelcomePage file', () => {
   it('checks whether the border color of the input field turns red as expected when the form is submitted without any input.', () => {
