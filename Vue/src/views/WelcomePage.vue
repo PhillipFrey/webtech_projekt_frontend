@@ -115,14 +115,14 @@ function openPopup(tripId: string) {
 
 function updateTripName(tripId: string) {
   const newTripName = editedTripNames[tripId].trim();
+  console.log(newTripName)
   if (newTripName === '') {
-    return;
+    return
   }
   const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
   if (tripIndex !== -1) {
-
     axios
-        .patch(`http://localhost:8080/apiTrip/trips/${tripId}`, newTripName)
+        .post(`http://localhost:8080/apiTrip/tripsName/${tripId}`, newTripName)
         .then(() => {
           trips.value[tripIndex].name = newTripName;
           closePopup(tripId);
