@@ -5,7 +5,7 @@
       <!-- Logo und Überschrift im Header -->
       <div class="logo">
         <img src="../assets/Logo.png" alt="CompanyLogo" />
-        <h1>Trip Planer</h1>
+        <h1>TripPlaner</h1>
       </div>
     </div>
 
@@ -57,6 +57,7 @@
                 <input v-model="editedTripNames[trip.id]" placeholder="Enter New Trip Name">
                 <!-- Ein Eingabefeld für den neuen Trip-Namen -->
                 <button @click="updateTripName(trip.id)">Update Trip Name</button>
+                <button id="delete_button" @click="deleteTrip(trip.id)">Delete Trip</button>
                 <!-- Ein Button, um den Trip-Namen zu aktualisieren -->
               </div>
             </div>
@@ -71,6 +72,7 @@
 import axios from 'axios';
 import { Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import {al, c} from "vitest/dist/reporters-5f784f42";
 
 // Definition eines Typs für einen Trip der erstellt wird
 type Trip = {
@@ -119,12 +121,12 @@ function updateTripName(tripId: string) {
   const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
   if (tripIndex !== -1) {
 
-
     axios
-        .patch(`http://localhost:8080/apiTrip/trips/${tripId}`, { name: newTripName })
+        .patch(`http://localhost:8080/apiTrip/trips/${tripId}`, newTripName)
         .then(() => {
           trips.value[tripIndex].name = newTripName;
           closePopup(tripId);
+          console.log(trips)
         })
         .catch((error) => {
           console.error('Error updating trip name:', error);
@@ -138,6 +140,20 @@ function closePopup(tripId: string) {
   const popup = document.getElementById(`popup-${tripId}`);
   if (popup) {
     popup.classList.remove('active'); // Entfernt die 'active'-Klasse, um das Popup zu schließen
+  }
+}
+
+function deleteTrip(tripId: string){
+  const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
+  if (tripIndex !== -1) {
+    try {
+      axios.delete(`http://localhost:8080/apiTrip/trips/${tripId}`)
+      trips.value.splice(tripIndex, 1)
+    }
+    catch (error) {
+      alert("Delete trip was not successful")
+    }
+    closePopup(tripId)
   }
 }
 
@@ -332,6 +348,11 @@ td:first-child {
   cursor: pointer;
   color: #45a049;
   margin-left: 5px;
+  font-size: 1.5em;
+}
+
+#delete_button{
+  background: #d90000;
 }
 
 .popup {
