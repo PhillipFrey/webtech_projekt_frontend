@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "esbuild-windows-64": "^0.15.15",
     "@terraformer/arcgis": "^2.1.2",
     "@vue/eslint-config-typescript": "^12.0.0",
     "axios": "^1.6.2",

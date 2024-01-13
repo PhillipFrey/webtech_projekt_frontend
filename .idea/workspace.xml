@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e" />
+    <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/vitest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vitest.config.ts" afterDir="false" />
+    </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +203,7 @@
       <workItem from="1705151421058" duration="1295000" />
       <workItem from="1705158941956" duration="1617000" />
       <workItem from="1705160565315" duration="4138000" />
-      <workItem from="1705164714785" duration="11312000" />
+      <workItem from="1705164714785" duration="11944000" />
     </task>
     <servers />
   </component>
