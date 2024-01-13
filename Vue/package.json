@@ -1,9 +1,6 @@
 {
   "name": "frontendvue",
   "version": "0.0.0",
-  "jest": {
-    "verbose": true
-  },
   "private": true,
   "scripts": {
     "dev": "vite",
