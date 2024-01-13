@@ -173,6 +173,10 @@ export default {
       try {
         const response = await axios.get(`https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?f=json&token=${apiKey}&stops=${stops}`);
 
+        if (response.data.messages.some(message => message.code === -2147201018)) {
+          alert("Couldn't calculate route. Please try again");
+        }
+
         const routeData = response.data;
 
         let routeDistance = routeData.directions[0].summary.totalLength;
