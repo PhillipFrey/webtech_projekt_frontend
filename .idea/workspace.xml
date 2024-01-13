@@ -5,8 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/vitest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vitest.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esbuild" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esbuild.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esbuild.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/LICENSE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/bin/esbuild" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/esbuild.wasm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/esm/browser.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/esm/browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/esm/browser.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/browser.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/browser.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/main.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/wasm_exec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/wasm_exec_node.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -203,7 +222,7 @@
       <workItem from="1705151421058" duration="1295000" />
       <workItem from="1705158941956" duration="1617000" />
       <workItem from="1705160565315" duration="4138000" />
-      <workItem from="1705164714785" duration="11944000" />
+      <workItem from="1705164714785" duration="12256000" />
     </task>
     <servers />
   </component>
