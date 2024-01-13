@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import WelcomePage from "../src/views/WelcomePage.vue";
+import WelcomePage from "@/views/WelcomePage.vue";
 import { describe, beforeEach, test, expect } from 'vitest';
 import { createMemoryHistory, createRouter } from "vue-router";
 
