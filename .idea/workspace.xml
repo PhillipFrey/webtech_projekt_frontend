@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.vitest/results.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.vitest/results.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package.json" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +55,7 @@
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs.jest.jest_package": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend/Vue/node_modules/jest",
@@ -75,7 +74,7 @@
       <recent name="C:\Users\Alexa\Desktop\Dokumente\Alex\HTW\5_semester\webtech\Webtech_Frontend\Vue\cypress\e2e" />
     </key>
   </component>
-  <component name="RunManager" selected="Vitest.WelcomePage">
+  <component name="RunManager" selected="Vitest.All Tests">
     <configuration name="WelcomePage.renders correctly" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/Vue/node_modules/jest" />
@@ -87,6 +86,14 @@
         <test-name value="WelcomePage" />
         <test-name value="renders correctly" />
       </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="All Tests" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/Vue/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$/Vue" />
+      <envs />
+      <scope-kind value="ALL" />
       <method v="2" />
     </configuration>
     <configuration name="WelcomePage" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
@@ -115,20 +122,6 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="just fail.should fail" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Vue/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Vue" />
-      <vitest-options value="--run" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Vue/test/test.spec.js" />
-      <test-names>
-        <test-name value="just fail" />
-        <test-name value="should fail" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="test:unit" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/Vue/package.json" />
       <command value="run" />
@@ -141,11 +134,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Vitest.All Tests" />
         <item itemvalue="Vitest.WelcomePage" />
         <item itemvalue="Jest.WelcomePage.renders correctly" />
         <item itemvalue="Vitest.just fail (3)" />
         <item itemvalue="npm.test:unit" />
-        <item itemvalue="Vitest.just fail.should fail" />
       </list>
     </recent_temporary>
   </component>
@@ -211,7 +204,7 @@
       <workItem from="1705151421058" duration="1295000" />
       <workItem from="1705158941956" duration="1617000" />
       <workItem from="1705160565315" duration="4138000" />
-      <workItem from="1705164714785" duration="3274000" />
+      <workItem from="1705164714785" duration="4007000" />
     </task>
     <servers />
   </component>
