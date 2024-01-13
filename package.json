@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@jest/globals": "^29.7.0",
     "vite": "^5.0.11"
   }
 }

@@ -1,11 +1,10 @@
 module.exports = {
-    preset: '@vue/cli-plugin-unit-jest',
+    verbose: true,
+    testEnvironment: 'node',
+    roots: ['<rootDir>/tests'],
+    testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/?(*.)+(spec|test).+(ts|tsx|js)'],
     transform: {
-        '^.+\\.vue$': 'vue-jest'
+        '^.+\\.(ts|tsx)$': 'ts-jest',
     },
-    automock: false,
-    resetMocks: false,
-    setupFiles: [
-        './setupJest.js'
-    ]
-}
+    collectCoverageFrom: ['**/*.{js,ts}', '!**/node_modules/**'],
+};
