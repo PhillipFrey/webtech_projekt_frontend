@@ -1,5 +1,3 @@
-# Webtech Frontend
-
 <h1>webtech_frontend</h1>
 <h2>Projektname: Reiseplaner mit Map-API</h2>
 <h3>Projektbeschreibung:</h3>
