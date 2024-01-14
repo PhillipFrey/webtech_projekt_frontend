@@ -1,5 +1,14 @@
 <template>
-  <div class="trip-creation-page">
+  <div class="container">
+    <!-- Header-Bereich -->
+    <div class="header">
+      <!-- Logo und Überschrift im Header -->
+      <div class="logo">
+        <img src="../assets/Logo.png" alt="CompanyLogo" />
+        <h1>TripPlaner</h1>
+      </div>
+    </div>
+
 
     <!-- OpenLayers Map-Komponente inkl.Größe -->
     <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:700px">
@@ -52,6 +61,8 @@
     </div>
     <div class="notification">{{ notification }}</div>
     <div class="calculate-route-button" @click="calculateRoute">Calculate Route </div>
+
+
 
     <!-- Info Box Für Marker -->
     <div class="info-box">
@@ -197,9 +208,10 @@ export default {
       const apiKey = process.env.VUE_APP_API_KEY;
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
+
       try {
         const response = await axios.get(`https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?f=json&token=${apiKey}&stops=${stops}`);
-
+        console.log(response)
         if (response.data.messages.some(message => message.code === -2147201018)) {
 
           await Swal.fire({
@@ -212,7 +224,7 @@ export default {
 
         const routeData = response.data;
 
-        let routeDistance = routeData.directions[0].summary.totalLength;
+        let routeDistance = routeData.routes.features[0].attributes.Total_Kilometers;
 
         routeDistance = Math.round(routeDistance * 100)/100;
 
@@ -375,6 +387,8 @@ body{
   z-index: 999
 }
 
+
+
 h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
@@ -397,7 +411,7 @@ div[v-cloak]:not(.hidden) {
 }
 
 #deleteButton{
-  padding: px 12px;
+  padding: 12px;
   font-size: 1rem;
   border: none;
   border-radius: 5px;
@@ -413,11 +427,7 @@ div[v-cloak]:not(.hidden) {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-.header-container {
-  display: flex;
-  align-items: center; /* Align vertically */
-  justify-content: flex-start; /* Align horizontally */
-}
+
 
 .loader {
   border: 16px solid #f3f3f3; /* Light grey */
@@ -439,6 +449,58 @@ div[v-cloak]:not(.hidden) {
   color: #1a1a1a;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+}
+
+
+.header {
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+h1 {
+  font-family: monospace;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  color: #45a049;
+}
+
+.header .logo img {
+  height: 100px;
+  margin-right: 10px;
+}
+
+.header a {
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.header a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+
+html,body{
+  padding: 0;
+  margin: 0;
 }
 
 </style>

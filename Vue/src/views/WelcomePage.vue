@@ -72,7 +72,7 @@
 import axios from 'axios';
 import { Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import {al, c} from "vitest/dist/reporters-5f784f42";
+import Swal from 'sweetalert2'
 
 // Definition eines Typs für einen Trip der erstellt wird
 type Trip = {
@@ -114,10 +114,13 @@ function openPopup(tripId: string) {
 
 
 function updateTripName(tripId: string) {
-  const newTripName = editedTripNames[tripId].trim();
-  console.log(newTripName)
+  const newTripName = editedTripNames[tripId].trim()
   if (newTripName === '') {
-    return
+    return Swal.fire({
+      title: 'Error!',
+      text: 'Please enter a name for the trip',
+      icon: 'error'
+    })
   }
   const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
   if (tripIndex !== -1) {
@@ -162,7 +165,11 @@ function submitTrip(event: Event) {
   event.preventDefault();
 
   if (tripName.value === '') {
-    return errorMessage.value = 'Please provide a name to create a trip';
+    return Swal.fire({
+     title: 'Error!',
+     text: 'Please enter a name for the trip',
+     icon: 'error'
+    })
   }
 
   axios
@@ -377,7 +384,6 @@ td:first-child {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background-color: rgba(23, 23, 23, 1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -396,7 +402,7 @@ td:first-child {
 }
 
 .header .logo img {
-  height: 60px;
+  height: 100px;
   margin-right: 10px;
 }
 

@@ -6,16 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/_metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/vue3-openlayers.js" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/vue3-openlayers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/src/views/WelcomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/src/views/WelcomePage.vue" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
     <list id="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" name="Changes by phillipfrey" comment="">
-      <change beforePath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/src/views/WelcomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/src/views/WelcomePage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,40 +35,13 @@
     <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/Vue/src/views/TripCreation.vue">
+    <file path="$PROJECT_DIR$/Vue/src/views/WelcomePage.vue">
       <ranges>
-        <range start1="35" end1="36" start2="35" end2="36" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="42" end1="43" start2="42" end2="42" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="47" end1="50" start2="46" end2="54" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="58" end1="59" start2="62" end2="63" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="75" end1="76" start2="79" end2="80" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="81" end1="81" start2="85" end2="86" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
-        <range start1="102" end1="102" start2="107" end2="108" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="109" end1="110" start2="115" end2="115" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="111" end1="111" start2="116" end2="117" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="127" end1="127" start2="133" end2="139" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="128" end1="128" start2="140" end2="141" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
-        <range start1="129" end1="131" start2="142" end2="142" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="156" end1="157" start2="167" end2="167" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="159" end1="159" start2="169" end2="171" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="163" end1="163" start2="175" end2="176" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="167" end1="167" start2="180" end2="182" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="168" end1="168" start2="183" end2="184" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="169" end1="170" start2="185" end2="191" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="182" end1="183" start2="203" end2="210" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
-        <range start1="208" end1="209" start2="235" end2="242" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="211" end1="211" start2="244" end2="246" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="215" end1="215" start2="250" end2="254" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="222" end1="228" start2="261" end2="264" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="241" end1="241" start2="277" end2="278" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="247" end1="247" start2="284" end2="285" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="261" end1="261" start2="299" end2="300" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
-        <range start1="277" end1="278" start2="316" end2="318" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="289" end1="290" start2="329" end2="330" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="310" end1="311" start2="350" end2="350" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="313" end1="314" start2="352" end2="352" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="360" end1="360" start2="398" end2="431" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
-        <range start1="361" end1="361" start2="432" end2="442" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="74" end1="75" start2="74" end2="75" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="116" end1="118" start2="116" end2="117" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="119" end1="120" start2="118" end2="123" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="164" end1="165" start2="167" end2="172" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
+        <range start1="398" end1="399" start2="405" end2="406" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
       </ranges>
     </file>
   </component>
@@ -88,30 +57,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "18.18.0",
-    "javascript.nodejs.core.library.typings.version": "18.18.0",
-    "jdk.selected.JAVA_MODULE": "20",
-    "last_opened_file_path": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend/Vue/node_modules/jest",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Users\\Alexa\\Desktop\\Dokumente\\Alex\\HTW\\5_semester\\webtech\\Webtech_Frontend\\Vue\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.18.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.18.0&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;20&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend/Vue/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Alexa\\Desktop\\Dokumente\\Alex\\HTW\\5_semester\\webtech\\Webtech_Frontend\\Vue\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Alexa\Desktop\Dokumente\Alex\HTW\5_semester\webtech\Webtech_Frontend\Vue" />
@@ -206,7 +175,8 @@
       <workItem from="1705249599045" duration="276000" />
       <workItem from="1705249881352" duration="454000" />
       <workItem from="1705250341275" duration="1442000" />
-      <workItem from="1705254391432" duration="6864000" />
+      <workItem from="1705254391432" duration="7086000" />
+      <workItem from="1705265202458" duration="4724000" />
     </task>
     <servers />
   </component>
