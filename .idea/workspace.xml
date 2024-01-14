@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/_metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/esbuild-windows-64/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/esbuild-windows-64/bin/esbuild" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/esbuild-windows-64/esbuild.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/node_modules/esbuild-windows-64/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/vitest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vitest.config.ts" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,6 +74,21 @@
       <recent name="C:\Users\Alexa\Desktop\Dokumente\Alex\HTW\5_semester\webtech\Webtech_Frontend\Vue\node_modules\vite\dist\node\chunks" />
       <recent name="C:\Users\Alexa\Desktop\Dokumente\Alex\HTW\5_semester\webtech\Webtech_Frontend\Vue\cypress\e2e" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="All Tests" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/Vue/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$/Vue" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Vitest.All Tests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -156,7 +159,7 @@
       <workItem from="1705249578071" duration="15000" />
       <workItem from="1705249599045" duration="276000" />
       <workItem from="1705249881352" duration="454000" />
-      <workItem from="1705250341275" duration="923000" />
+      <workItem from="1705250341275" duration="1226000" />
     </task>
     <servers />
   </component>
