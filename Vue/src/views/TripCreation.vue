@@ -33,21 +33,25 @@
                   :scale="0.025"
                   :anchor="[0.5, 0.85]"
               ></ol-style-icon>
-              <ol-style-text :offsetY="-22" :text="marker.name"></ol-style-text>
+              <ol-style-text :offsetY="-35" :text="marker.name"></ol-style-text>
             </ol-style>
           </ol-feature>
         </ol-source-vector>
       </ol-vector-layer>
 
       <!-- Calculate Route Button als Layer auf der Karte -->
-      <div class="calculate-route-button" @click="calculateRoute">Calculate Route </div>
     </ol-map>
 
 
     <!-- Zeigt den TripNamen unter der Map an -->
-    <h2>
-      <div class="TripName">{{ tripName }}</div>
-    </h2>
+    <div class="header-container">
+      <div id="loader" class="loader"></div>
+      <h2>
+        <div class="TripName">{{ tripName }}</div>
+      </h2>
+    </div>
+    <div class="notification">{{ notification }}</div>
+    <div class="calculate-route-button" @click="calculateRoute">Calculate Route </div>
 
     <!-- Info Box Für Marker -->
     <div class="info-box">
@@ -56,7 +60,7 @@
         <li v-for="(marker, index) in markers" :key="index">
           <h4>{{ marker.name }}</h4>
           <p>Latitude: {{ marker.latitude }}, Longitude: {{ marker.longitude }}</p>
-          <button @click="deleteMarker(marker)">Delete</button>
+          <button id="deleteButton" @click="deleteMarker(marker)">Delete</button>
         </li>
       </ul>
     </div>
@@ -73,12 +77,13 @@
 
 
 <script>
-import markerIcon from "../assets/output-onlinepngtools.png"
+import markerIcon from "../assets/markerIcon.png"
 import {onMounted, ref} from "vue";
 import axios from 'axios';
 import {useRoute} from 'vue-router';
 import {GeoJSON} from 'ol/format';
 import {arcgisToGeoJSON} from "@terraformer/arcgis"
+import Swal from 'sweetalert2'
 
 
 
@@ -100,6 +105,7 @@ export default {
     const trips = ref([])
     let totalLength = ref(0);
     const tripName = ref("");
+    const notification = ref('');
 
     const getMarkerData = async () => {
       let path = window.location.pathname;
@@ -107,8 +113,8 @@ export default {
       await axios.get(`http://localhost:8080/apiTrip/trips/${id}`)
           .then((response) => { trips.value = response.data })}
 
-    //load data from database, based on the id in the url
     onMounted(async () => {
+      vectors.value.source.clear();
       await getMarkerData();
       for(let dataFromDb of trips.value.markers){
         const newMarker = {
@@ -126,9 +132,14 @@ export default {
     console.log(markers)
     console.log(markersId.value)
 
-    const drawstart = async (event) => {
+    const renameMarkers = () => {
+      markers.value.forEach((marker, index) => {
+        marker.name = `Marker ${index + 1}`;
+      });
+    };
 
-      // vectors.value.source.addFeatures(event)
+
+    const drawstart = async (event) => {
       setTimeout(() => {
         for(let feature of vectors.value.source.getFeatures()){
           markerFeatures.value.push(feature)
@@ -154,20 +165,30 @@ export default {
           latitude: markerCoordinates.value.latitude,
           longitude: markerCoordinates.value.longitude,
         };
-        // markerFeatures.value.push(vectors.value.source.addFeatures(event))
         markers.value.push(newMarker);
       };
+
+      notification.value = 'Conditions have changed. Recalculate route to show new total distance';
 
       console.log(markers)
       console.log(markersId)
       await sendCoordinates();
+      vectors.value.source.clear();
     };
 
     const calculateRoute = async () => {
       if (markers.value.length >= 2) {
+        document.getElementById('loader').style.display = 'block';
+        notification.value = '';
         await fetchRouteData();
+        document.getElementById('loader').style.display = 'none';
       } else {
-        alert("Please add at least two markers to calculate the route.");
+        await Swal.fire({
+          title: 'Error!',
+          text: 'Please add at least two markers to calculate the route.',
+          icon: 'error',
+          confirmationButtonText: 'Cool'
+        })
       }
     };
 
@@ -180,7 +201,13 @@ export default {
         const response = await axios.get(`https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?f=json&token=${apiKey}&stops=${stops}`);
 
         if (response.data.messages.some(message => message.code === -2147201018)) {
-          alert("Couldn't calculate route. Please try again");
+
+          await Swal.fire({
+            title: 'Error!',
+            text: 'Couldnt calculate route. Please try again :(',
+            icon: 'error',
+            confirmationButtonText: 'Cool'
+          })
         }
 
         const routeData = response.data;
@@ -206,13 +233,25 @@ export default {
         }
 
       } catch (error) {
-        console.error('Failed to fetch route data:', error);
+        await Swal.fire({
+          title: 'Error!',
+          text: 'Failed to fetch route data:', error,
+          icon: 'error',
+          confirmationButtonText: 'Cool'
+        })
+        document.getElementById('loader').style.display = 'none';
       }
     };
+
+
 
     const saveTotalDistance = async(totalDistance) => {
       let path = window.location.pathname;
       let id = path.substring(path.lastIndexOf('/') + 1);
+
+      if(markers.value.length < 2){
+        totalDistance = 0
+      }
       try {
         await axios
             .post(`http://localhost:8080/apiTrip/trips/${id}`, totalDistance, {
@@ -220,12 +259,9 @@ export default {
                 'Content-Type': 'application/json'
               }
             })
-            .then(() => {
-              totalDistance = 0;
-            });
-      } catch (error) {
-        console.error('Error saving total distance: ', error);
-      }
+        } catch (error) {
+          console.error('Error saving total distance: ', error);
+        }
     }
 
     const deleteMarker = async (marker) => {
@@ -239,12 +275,14 @@ export default {
         markers.value.splice(index, 1);
         vectors.value.source.removeFeature(markerFeatures.value[index]);
       }
+      renameMarkers();
 
       try {
         await axios.delete(`http://localhost:8080/apiMarker/markers/${marker.id}`);
       } catch (error) {
         console.error('Error deleting marker:', error);
       }
+      await saveTotalDistance()
     };
 
 
@@ -259,6 +297,7 @@ export default {
       }
 
     };
+
 
     return {
       vectors,
@@ -275,7 +314,8 @@ export default {
       deleteMarker,
       calculateRoute,
       totalLength,
-      tripName
+      tripName,
+      notification
     }
   },
 }
@@ -287,7 +327,7 @@ export default {
 
 
 .calculate-route-button {
-  position: absolute;
+  text-align: center;
   top: 10px;
   right: 10px;
   background-color: #45a049;
@@ -308,10 +348,8 @@ h2 {
 }
 
 .TripName{
-
   color: #1a1a1a;
   font-size: 2rem
-
 }
 
 p {
@@ -358,6 +396,49 @@ div[v-cloak]:not(.hidden) {
   display: block;
 }
 
+#deleteButton{
+  padding: px 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #FF0000;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
 
+#deleteButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.header-container {
+  display: flex;
+  align-items: center; /* Align vertically */
+  justify-content: flex-start; /* Align horizontally */
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite; /* Change duration to 1s */
+  display: none; /* Initially hidden */
+  margin-right: 10px; /* Add some space between the loader and the trip name */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.notification{
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 
 </style>

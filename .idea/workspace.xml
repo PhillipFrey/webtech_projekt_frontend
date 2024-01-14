@@ -6,9 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/vitest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vitest.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/_metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/vue3-openlayers.js" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/vue3-openlayers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
+    <list id="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" name="Changes by phillipfrey" comment="">
+      <change beforePath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +37,44 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/Vue/src/views/TripCreation.vue">
+      <ranges>
+        <range start1="35" end1="36" start2="35" end2="36" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="42" end1="43" start2="42" end2="42" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="47" end1="50" start2="46" end2="54" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="58" end1="59" start2="62" end2="63" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="75" end1="76" start2="79" end2="80" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="81" end1="81" start2="85" end2="86" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
+        <range start1="102" end1="102" start2="107" end2="108" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="109" end1="110" start2="115" end2="115" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="111" end1="111" start2="116" end2="117" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="127" end1="127" start2="133" end2="139" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="128" end1="128" start2="140" end2="141" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
+        <range start1="129" end1="131" start2="142" end2="142" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="156" end1="157" start2="167" end2="167" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="159" end1="159" start2="169" end2="171" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="163" end1="163" start2="175" end2="176" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="167" end1="167" start2="180" end2="182" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="168" end1="168" start2="183" end2="184" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="169" end1="170" start2="185" end2="191" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="182" end1="183" start2="203" end2="210" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
+        <range start1="208" end1="209" start2="235" end2="242" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="211" end1="211" start2="244" end2="246" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="215" end1="215" start2="250" end2="254" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="222" end1="228" start2="261" end2="264" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="241" end1="241" start2="277" end2="278" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="247" end1="247" start2="284" end2="285" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="261" end1="261" start2="299" end2="300" changelist="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" />
+        <range start1="277" end1="278" start2="316" end2="318" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="289" end1="290" start2="329" end2="330" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="310" end1="311" start2="350" end2="350" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="313" end1="314" start2="352" end2="352" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="360" end1="360" start2="398" end2="431" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+        <range start1="361" end1="361" start2="432" end2="442" changelist="cee74f19-3e19-40fd-8741-452baf294b06" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -52,7 +98,7 @@
     "javascript.nodejs.core.library.configured.version": "18.18.0",
     "javascript.nodejs.core.library.typings.version": "18.18.0",
     "jdk.selected.JAVA_MODULE": "20",
-    "last_opened_file_path": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/webtechProjekt",
+    "last_opened_file_path": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -159,7 +205,8 @@
       <workItem from="1705249578071" duration="15000" />
       <workItem from="1705249599045" duration="276000" />
       <workItem from="1705249881352" duration="454000" />
-      <workItem from="1705250341275" duration="1226000" />
+      <workItem from="1705250341275" duration="1442000" />
+      <workItem from="1705254391432" duration="6864000" />
     </task>
     <servers />
   </component>
