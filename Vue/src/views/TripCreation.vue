@@ -1,14 +1,20 @@
 <template>
-  <div>
-    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:800px">
+  <div class="trip-creation-page">
+
+    <!-- OpenLayers Map-Komponente inkl.Größe -->
+    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:700px">
+
+      <!-- OpenLayers View Komponente -->
       <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"/>
 
+      <!-- OpenLayers Layer-Gruppe für OSM-Tiles -->
       <ol-layer-group :opacity="0.4">
         <ol-tile-layer>
           <ol-source-osm/>
         </ol-tile-layer>
       </ol-layer-group>
 
+      <!-- OpenLayers Vector-Layer für Routen Zeichnung -->
       <ol-vector-layer>
         <ol-source-vector ref="vectors">
           <ol-interaction-draw @drawstart="drawstart" :type="drawType">
@@ -16,55 +22,55 @@
         </ol-source-vector>
       </ol-vector-layer>
 
-
-
+      <!-- OpenLayers Vector-Layer für Marker -->
       <ol-vector-layer>
         <ol-source-vector>
           <ol-feature v-for="(marker, index) in markers" :key="index">
-            <ol-geom-point :coordinates="[
-                marker.latitude,
-                marker.longitude,
-              ]"></ol-geom-point>
+            <ol-geom-point :coordinates="[marker.latitude, marker.longitude]"></ol-geom-point>
             <ol-style>
-              <ol-style-circle :radius="10">
-                <ol-style-fill :color="ffff00"></ol-style-fill>
-                <ol-style-stroke
-                    :color="ffcc33"
-                    :width="10"
-                ></ol-style-stroke>
-                <ol-style-text :text="marker.name" ></ol-style-text>
-              </ol-style-circle>
+              <ol-style-icon
+                  :src="markerIcon"
+                  :scale="0.025"
+                  :anchor="[0.5, 0.85]"
+              ></ol-style-icon>
+              <ol-style-text :offsetY="-22" :text="marker.name"></ol-style-text>
             </ol-style>
           </ol-feature>
         </ol-source-vector>
       </ol-vector-layer>
+
+      <!-- Calculate Route Button als Layer auf der Karte -->
+      <div class="calculate-route-button" @click="calculateRoute">Calculate Route </div>
     </ol-map>
 
-    <div class="info-panel">
-      <h2>
-        <div>{{ tripName }}</div>
-        <button @click="calculateRoute" class="calculate-route-button">Calculate Route</button>
-      </h2>
 
-      <div class="info-box">
-        <h3>Marker</h3>
-        <ul>
-          <li v-for="(marker, index) in markers" :key="index">
-            <h4>{{ marker.name }}</h4>
-            <p>Latitude: {{ marker.latitude }}, Longitude: {{ marker.longitude }}</p>
-            <button @click="deleteMarker(marker)">Delete</button>
-          </li>
-        </ul>
-      </div>
+    <!-- Zeigt den TripNamen unter der Map an -->
+    <h2>
+      <div class="TripName">{{ tripName }}</div>
+    </h2>
 
-      <div class="info-box">
-        <h3>Gesamtdistanz</h3>
-        <div v-if="markers.length < 2" >Total Length in Kilometers: 0</div>
-        <div v-else> Total Length in Kilometers: {{ totalLength }}</div>
-      </div>
+    <!-- Info Box Für Marker -->
+    <div class="info-box">
+      <h3>Marker</h3>
+      <ul>
+        <li v-for="(marker, index) in markers" :key="index">
+          <h4>{{ marker.name }}</h4>
+          <p>Latitude: {{ marker.latitude }}, Longitude: {{ marker.longitude }}</p>
+          <button @click="deleteMarker(marker)">Delete</button>
+        </li>
+      </ul>
     </div>
+
+    <!-- Info Box Für Gesamtdistanz -->
+    <div class="info-box">
+      <h3>Total distance</h3>
+      <div v-if="markers.length < 2">Total Length in Kilometers: 0</div>
+      <div v-else>Total Length in Kilometers: {{ totalLength }}</div>
+    </div>
+
   </div>
 </template>
+
 
 <script>
 import markerIcon from "../assets/output-onlinepngtools.png"
@@ -73,6 +79,7 @@ import axios from 'axios';
 import {useRoute} from 'vue-router';
 import {GeoJSON} from 'ol/format';
 import {arcgisToGeoJSON} from "@terraformer/arcgis"
+
 
 
 export default {
@@ -147,7 +154,6 @@ export default {
           latitude: markerCoordinates.value.latitude,
           longitude: markerCoordinates.value.longitude,
         };
-
         // markerFeatures.value.push(vectors.value.source.addFeatures(event))
         markers.value.push(newMarker);
       };
@@ -167,7 +173,7 @@ export default {
 
     const fetchRouteData = async () => {
       await clearRoutes()
-      const apiKey = "api_key"; // Replace with your actual API key
+      const apiKey = process.env.VUE_APP_API_KEY;
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
       try {
@@ -279,38 +285,33 @@ export default {
 
 <style scoped>
 
+
 .calculate-route-button {
-  margin-left: 10px;
-  cursor: pointer;
-}
-/* Stile für das Layout */
-.map {
-  grid-column: 1 / 2;
-  height: 90vh;
-}
-
-.info-panel {
-  grid-column: 2 / 3;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Stile für die grauen Info-Boxen */
-.info-box {
-  background-color: #f0f0f0;
-  border-radius: 8px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #45a049;
+  color: #ffffff;
   padding: 10px;
-  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1;
 }
+
+/* Stile für das Layout */
 
 h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
 }
 
-h3 {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
+.TripName{
+
+  color: #1a1a1a;
+  font-size: 2rem
+
 }
 
 p {
@@ -322,22 +323,41 @@ body{
   padding: 0;
 }
 
-#map{
-  width: 100%;
-  height: 70vh;
-
-}
-
-
-/* Container Design für die Überschrift */
-.info-container {
-  background-color: #f2f2f2;
+.info-box {
+  background: linear-gradient(to bottom, #ffffff, #d5d5d5);
+  border-radius: 8px;
   padding: 20px;
-  text-align: center;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 999
 }
 
-.content {
-  max-width: 80%;
-  margin: 0 auto;
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #45a049;
 }
+
+div {
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* Stile für den Fall, dass markers.length < 2 */
+div[v-cloak] {
+  display: none;
+}
+
+/* Stile für den Fall, dass markers.length >= 2 */
+div[v-cloak]:not(.hidden) {
+  display: block;
+}
+
+
+
 </style>

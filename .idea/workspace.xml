@@ -5,27 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esbuild" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esbuild.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esbuild.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/LICENSE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/bin/esbuild" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/esbuild.wasm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/esm/browser.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/esm/browser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/esm/browser.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/browser.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/browser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/browser.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/main.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/lib/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/wasm_exec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/esbuild-wasm/wasm_exec_node.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/node_modules/.vite/deps/_metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/esbuild-windows-64/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/esbuild-windows-64/bin/esbuild" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/esbuild-windows-64/esbuild.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/node_modules/esbuild-windows-64/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/src/views/TripCreation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vite.config.ts" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,8 +61,10 @@
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
+    "javascript.nodejs.core.library.configured.version": "18.18.0",
+    "javascript.nodejs.core.library.typings.version": "18.18.0",
     "jdk.selected.JAVA_MODULE": "20",
-    "last_opened_file_path": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend",
+    "last_opened_file_path": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/webtechProjekt",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -78,7 +73,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs.jest.jest_package": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend/Vue/node_modules/jest",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pathVariables",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "ts.external.directory.path": "C:\\Users\\Alexa\\Desktop\\Dokumente\\Alex\\HTW\\5_semester\\webtech\\Webtech_Frontend\\Vue\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -91,74 +86,6 @@
       <recent name="C:\Users\Alexa\Desktop\Dokumente\Alex\HTW\5_semester\webtech\Webtech_Frontend\Vue\node_modules\vite\dist\node\chunks" />
       <recent name="C:\Users\Alexa\Desktop\Dokumente\Alex\HTW\5_semester\webtech\Webtech_Frontend\Vue\cypress\e2e" />
     </key>
-  </component>
-  <component name="RunManager" selected="Vitest.WelcomePage">
-    <configuration name="WelcomePage.renders correctly" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/Vue/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/Vue" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Vue/test/test.spec.js" />
-      <test-names>
-        <test-name value="WelcomePage" />
-        <test-name value="renders correctly" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="All Tests" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Vue/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Vue" />
-      <envs />
-      <scope-kind value="ALL" />
-      <method v="2" />
-    </configuration>
-    <configuration name="WelcomePage" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Vue/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Vue" />
-      <vitest-options value="--run" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/Vue/test/test.spec.js" />
-      <test-names>
-        <test-name value="WelcomePage" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="just fail (3)" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Vue/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Vue" />
-      <vitest-options value="--run" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/Vue/test/test.spec.js" />
-      <test-names>
-        <test-name value="just fail" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/Vue/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="test" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Vitest.WelcomePage" />
-        <item itemvalue="npm.test" />
-        <item itemvalue="Vitest.All Tests" />
-        <item itemvalue="Jest.WelcomePage.renders correctly" />
-        <item itemvalue="Vitest.just fail (3)" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -222,7 +149,14 @@
       <workItem from="1705151421058" duration="1295000" />
       <workItem from="1705158941956" duration="1617000" />
       <workItem from="1705160565315" duration="4138000" />
-      <workItem from="1705164714785" duration="12256000" />
+      <workItem from="1705164714785" duration="12480000" />
+      <workItem from="1705237906703" duration="1012000" />
+      <workItem from="1705244549243" duration="4318000" />
+      <workItem from="1705249193864" duration="379000" />
+      <workItem from="1705249578071" duration="15000" />
+      <workItem from="1705249599045" duration="276000" />
+      <workItem from="1705249881352" duration="454000" />
+      <workItem from="1705250341275" duration="923000" />
     </task>
     <servers />
   </component>
@@ -258,5 +192,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e" />
     <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
