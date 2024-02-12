@@ -95,23 +95,6 @@ axios
       trips.value = response.data;
     });
 
-// Funktion, um ein Popup für die Bearbeitung eines Trip-Namens zu öffnen und zu schließen
-function openPopup(tripId: string) {
-  const popup = document.getElementById(`popup-${tripId}`);
-  if (popup) {
-    if (popup.classList.contains('active')) {
-      popup.classList.remove('active');
-    } else {
-      // Schließe alle anderen Popups vor dem Öffnen des aktuellen Popups
-      const popups = document.querySelectorAll('.popup');
-      popups.forEach((popup) => {
-        popup.classList.remove('active');
-      });
-      popup.classList.add('active');
-    }
-  }
-}
-
 
 function updateTripName(tripId: string) {
   const newTripName = editedTripNames[tripId].trim()
@@ -146,6 +129,23 @@ function closePopup(tripId: string) {
   }
 }
 
+// Funktion, um ein Popup für die Bearbeitung eines Trip-Namens zu öffnen und zu schließen
+function openPopup(tripId: string) {
+  const popup = document.getElementById(`popup-${tripId}`);
+  if (popup) {
+    if (popup.classList.contains('active')) {
+      popup.classList.remove('active');
+    } else {
+      // Schließe alle anderen Popups vor dem Öffnen des aktuellen Popups
+      const popups = document.querySelectorAll('.popup');
+      popups.forEach((popup) => {
+        popup.classList.remove('active');
+      });
+      popup.classList.add('active');
+    }
+  }
+}
+
 function deleteTrip(tripId: string){
   const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
   if (tripIndex !== -1) {
@@ -163,8 +163,8 @@ function deleteTrip(tripId: string){
 // Funktion zum Erstellen eines neuen Trips
 function submitTrip(event: Event) {
   event.preventDefault();
-
-  if (tripName.value === '') {
+//regex = check if whitespace is in tripName.value
+  if (tripName.value === '' || /^\s*$/) {
     return Swal.fire({
      title: 'Error!',
      text: 'Please enter a name for the trip',
