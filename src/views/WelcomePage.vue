@@ -5,7 +5,7 @@
       <!-- Logo und Überschrift im Header -->
       <div class="logo">
         <img src="../assets/Logo.png" alt="CompanyLogo" />
-        <h1>TripPlaner</h1>
+        <h1 class="heading">TripPlaner</h1>
       </div>
     </div>
 
@@ -66,6 +66,7 @@
         </tbody>
       </table>
     </div>
+  <h1 class="authors">Developed by Phillip Frey (https://github.com/PhillipFrey) and Alexander Bürklen (https://github.com/AlexBuerklenHTW)</h1>
 </template>
 
 <script setup lang="ts">
@@ -207,7 +208,7 @@ header {
   padding: 20px;
 }
 
-h1 {
+.heading {
   font-family: monospace;
   font-size: 2.5rem;
   margin-bottom: 20px;
@@ -229,16 +230,13 @@ h1 {
   z-index: 999;
  /* transition: transform 0.3s ease;*(
 
+  */
   /* Stile für den Text */
   font-family: monospace;
   font-size: 1.1rem;
   line-height: 1.6;
   color: #333;
 }
-
-/*.description-box:hover {
-  transform: scale(1.02);
-}*/
 
 p.description {
   margin: 0;
@@ -295,13 +293,11 @@ button {
   color: white;
   cursor: pointer;
   transition: transform 0.3s ease; /* Hinzugefügter Hover-Effekt */
-
 }
 
 .create-trip-form button:hover {
   transform: scale(1.02); /* Vergrößere den Button beim Hover */
 }
-
 
 /* Gesamtes Tabellen-Design */
 table {
@@ -324,9 +320,6 @@ td {
   border: none;
   padding: 15px;
   text-align: left;
-
-
-
 }
 
 /*Tabellen Überschrift*/
@@ -392,9 +385,7 @@ td:first-child {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   transition: background-color 0.3s ease; /* Smooth color transition */
-
 }
-
 
 .header .logo {
   display: flex;
@@ -440,7 +431,6 @@ td:first-child {
   font-family: monospace;
 }
 
-
 .logo-small {
   height: 100px;
   margin-right: 10px;
@@ -451,5 +441,10 @@ td:first-child {
   align-items: center;
 }
 
-
+.authors{
+  font-family: monospace;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
 </style>
