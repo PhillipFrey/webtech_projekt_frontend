@@ -71,7 +71,8 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import { Ref, ref } from 'vue';
+import {ref} from 'vue';
+import { type Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2'
 

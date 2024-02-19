@@ -7,6 +7,7 @@ import 'vue3-openlayers/styles.css'
 
 const app = createApp(App)
 app.use(router)
+// @ts-ignore
 app.use(OpenLayersMap)
 app.mount('#app')
 

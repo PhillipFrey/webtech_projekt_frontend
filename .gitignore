@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-.env
+.env.development
 .DS_Store
 dist
 dist-ssr
@@ -26,4 +26,5 @@ coverage
 *.njsproj
 *.sln
 *.sw?
-../.env
+.env.production
+.env.development
