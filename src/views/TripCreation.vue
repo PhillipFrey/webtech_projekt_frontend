@@ -205,7 +205,7 @@ export default {
 
     const fetchRouteData = async () => {
       await clearRoutes()
-      const apiKey = process.env.VUE_APP_API_KEY;
+      const apiKey = import.meta.env.VITE_API_KEY;
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
 
 
