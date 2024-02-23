@@ -117,11 +117,12 @@ export default {
     let totalLength = ref(0);
     const tripName = ref("");
     const notification = ref('');
+    const base_url_backend = import.meta.env.VITE_BACKEND_URL
 
     const getMarkerData = async () => {
       let path = window.location.pathname;
       let id = path.substring(path.lastIndexOf('/') + 1);
-      await axios.get(`http://localhost:8080/apiTrip/trips/${id}`)
+      await axios.get(base_url_backend + `/apiTrip/trips/${id}`)
           .then((response) => { trips.value = response.data })}
 
     onMounted(async () => {
@@ -164,7 +165,7 @@ export default {
       };
 
       const sendCoordinates = async () => {
-        const response = await axios.post(`http://localhost:8080/apiMarker/markers?tripId=${tripId}`, {
+        const response = await axios.post(base_url_backend +  + `/apiMarker/markers?tripId=${tripId}`, {
           lat: markerCoordinates.value.latitude,
           lng: markerCoordinates.value.longitude,
           tripId: tripId
@@ -266,7 +267,7 @@ export default {
       }
       try {
         await axios
-            .post(`http://localhost:8080/apiTrip/trips/${id}`, totalDistance, {
+            .post(base_url_backend + `/apiTrip/trips/${id}`, totalDistance, {
               headers: {
                 'Content-Type': 'application/json'
               }
@@ -290,7 +291,7 @@ export default {
       renameMarkers();
 
       try {
-        await axios.delete(`http://localhost:8080/apiMarker/markers/${marker.id}`);
+        await axios.delete(base_url_backend + `/apiMarker/markers/${marker.id}`);
       } catch (error) {
         console.error('Error deleting marker:', error);
       }

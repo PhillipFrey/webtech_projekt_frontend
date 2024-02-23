@@ -88,11 +88,12 @@ let tripName: Ref<string> = ref('');
 let errorMessage: Ref<string> = ref('');
 let router = useRouter();
 let editedTripNames: Record<string, string> = {};
+const base_url_backend = import.meta.env.VITE_BACKEND_URL
 
 
 // ruft eine Liste von Trips ab, welche vom Server gezogen werden (GetRequest)
 axios
-    .get('http://localhost:8080/apiTrip/trips')
+    .get(base_url_backend + '/apiTrip/trips')
     .then((response) => {
       trips.value = response.data;
     });
@@ -110,7 +111,7 @@ function updateTripName(tripId: string) {
   const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
   if (tripIndex !== -1) {
     axios
-        .post(`http://localhost:8080/apiTrip/tripsName/${tripId}`, newTripName)
+        .post(base_url_backend + `/apiTrip/tripsName/${tripId}`, newTripName)
         .then(() => {
           trips.value[tripIndex].name = newTripName;
           closePopup(tripId);
@@ -152,7 +153,7 @@ function deleteTrip(tripId: string){
   const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
   if (tripIndex !== -1) {
     try {
-      axios.delete(`http://localhost:8080/apiTrip/trips/${tripId}`)
+      axios.delete(base_url_backend + `/apiTrip/trips/${tripId}`)
       trips.value.splice(tripIndex, 1)
     }
     catch (error) {
@@ -175,7 +176,7 @@ function submitTrip(event: Event) {
   }
 
   axios
-      .post('http://localhost:8080/apiTrip/trips', { name: tripName.value })
+      .post(base_url_backend + '/apiTrip/trips', { name: tripName.value })
       .then((response) => {
         tripName.value = '';
         trips.value = [...trips.value, response.data];
