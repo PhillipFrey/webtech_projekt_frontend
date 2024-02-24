@@ -1,37 +1,24 @@
 <template>
   <div class="container">
-    <!-- Header-Bereich -->
     <div class="header">
-      <!-- Logo und Überschrift im Header -->
       <div class="logo">
         <img src="../assets/Logo.png" alt="CompanyLogo" />
         <h1>TripPlaner</h1>
       </div>
     </div>
-
-
-    <!-- OpenLayers Map-Komponente inkl.Größe -->
     <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:700px">
-
-      <!-- OpenLayers View Komponente -->
       <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" :projection="projection"/>
-
-      <!-- OpenLayers Layer-Gruppe für OSM-Tiles -->
       <ol-layer-group :opacity="0.4">
         <ol-tile-layer>
           <ol-source-osm/>
         </ol-tile-layer>
       </ol-layer-group>
-
-      <!-- OpenLayers Vector-Layer für Routen Zeichnung -->
       <ol-vector-layer>
         <ol-source-vector ref="vectors">
           <ol-interaction-draw @drawstart="drawstart" :type="drawType">
           </ol-interaction-draw>
         </ol-source-vector>
       </ol-vector-layer>
-
-      <!-- OpenLayers Vector-Layer für Marker -->
       <ol-vector-layer>
         <ol-source-vector>
           <ol-feature v-for="(marker, index) in markers" :key="index">
@@ -47,12 +34,7 @@
           </ol-feature>
         </ol-source-vector>
       </ol-vector-layer>
-
-      <!-- Calculate Route Button als Layer auf der Karte -->
     </ol-map>
-
-
-    <!-- Zeigt den TripNamen unter der Map an -->
     <div class="header-container">
       <div id="loader" class="loader"></div>
       <h2>
@@ -61,10 +43,6 @@
     </div>
     <div class="notification">{{ notification }}</div>
     <div class="calculate-route-button" @click="calculateRoute">Calculate Route </div>
-
-
-
-    <!-- Info Box Für Marker -->
     <div class="info-box">
       <h3>Marker</h3>
       <ul>
@@ -75,17 +53,13 @@
         </li>
       </ul>
     </div>
-
-    <!-- Info Box Für Gesamtdistanz -->
     <div class="info-box">
       <h3>Total distance</h3>
       <div v-if="markers.length < 2">Total Length in Kilometers: 0</div>
       <div v-else>Total Length in Kilometers: {{ totalLength }}</div>
     </div>
-
   </div>
 </template>
-
 
 <script>
 import markerIcon from "../assets/markerIcon.png"
@@ -122,7 +96,6 @@ export default {
       let id = path.substring(path.lastIndexOf('/') + 1);
       await axios.get(base_url_backend + `/apiTrip/trips/${id}`)
           .then((response) => { trips.value = response.data })}
-
     onMounted(async () => {
       vectors.value.source.clear();
       await getMarkerData();
@@ -148,14 +121,12 @@ export default {
       });
     };
 
-
     const drawstart = async (event) => {
       setTimeout(() => {
         for(let feature of vectors.value.source.getFeatures()){
           markerFeatures.value.push(feature)
           markerFeatures.value.splice(0,1)
         }}, 0);
-
       const markerCoordinates = event.feature.getGeometry().getCoordinates();
       markerCoordinates.value = {
         latitude: markerCoordinates[0],
@@ -177,9 +148,7 @@ export default {
         };
         markers.value.push(newMarker);
       };
-
       notification.value = 'Conditions have changed. Recalculate route to show new total distance';
-
       console.log(markers)
       console.log(markersId)
       await sendCoordinates();
@@ -206,13 +175,10 @@ export default {
       await clearRoutes()
       const apiKey = import.meta.env.VITE_API_KEY;
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
-
-
       try {
         const response = await axios.get(`https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?f=json&token=${apiKey}&stops=${stops}`);
         console.log(response)
         if (response.data.messages.some(message => message.code === -2147201018)) {
-
           await Swal.fire({
             title: 'Error!',
             text: 'Couldnt calculate route. Please try again :(',
@@ -220,29 +186,19 @@ export default {
             confirmationButtonText: 'Cool'
           })
         }
-
         const routeData = response.data;
-
         let routeDistance = routeData.routes.features[0].attributes.Total_Kilometers;
-
         routeDistance = Math.round(routeDistance * 100)/100;
-
         totalLength.value = routeDistance
-
         await saveTotalDistance(routeDistance)
-
         const geoJsonRoutes = arcgisToGeoJSON(routeData.routes);
-
         const geoJsonFormat = new GeoJSON();
         routeFeatureRef.value = geoJsonFormat.readFeatures(geoJsonRoutes);
-
-
         if (vectors.value && vectors.value.source) {
           routeFeatureRef.value.forEach(feature => {
             vectors.value.source.addFeature(feature);
           });
         }
-
       } catch (error) {
         await Swal.fire({
           title: 'Error!',
@@ -253,8 +209,6 @@ export default {
         document.getElementById('loader').style.display = 'none';
       }
     };
-
-
 
     const saveTotalDistance = async(totalDistance) => {
       let path = window.location.pathname;
@@ -280,14 +234,12 @@ export default {
       await clearRoutes();
       console.log(markers);
       console.log(marker);
-
       const index = markers.value.findIndex(m => m.id === marker.id);
       if (index !== -1) {
         markers.value.splice(index, 1);
         vectors.value.source.removeFeature(markerFeatures.value[index]);
       }
       renameMarkers();
-
       try {
         await axios.delete(base_url_backend + `/apiMarker/markers/${marker.id}`);
       } catch (error) {
@@ -296,20 +248,14 @@ export default {
       await saveTotalDistance()
     };
 
-
     const clearRoutes = async () => {
-
       if (routeFeatureRef.value) {
         routeFeatureRef.value.forEach(feature => {
           vectors.value.source.removeFeature(feature);
         });
-
         routeFeatureRef.value = [];
       }
-
     };
-
-
     return {
       vectors,
       drawstart,
@@ -332,11 +278,7 @@ export default {
 }
 </script>
 
-
-
 <style scoped>
-
-
 .calculate-route-button {
   text-align: center;
   top: 10px;
@@ -348,8 +290,6 @@ export default {
   cursor: pointer;
   z-index: 1;
 }
-
-/* Stile für das Layout */
 
 h2 {
   font-size: 2rem;
@@ -386,8 +326,6 @@ body{
   z-index: 999
 }
 
-
-
 h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
@@ -399,12 +337,10 @@ div {
   color: rgba(0, 0, 0, 0.9);
 }
 
-/* Stile für den Fall, dass markers.length < 2 */
 div[v-cloak] {
   display: none;
 }
 
-/* Stile für den Fall, dass markers.length >= 2 */
 div[v-cloak]:not(.hidden) {
   display: block;
 }
@@ -426,17 +362,15 @@ div[v-cloak]:not(.hidden) {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-
-
 .loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  animation: spin 1s linear infinite; /* Change duration to 1s */
-  display: none; /* Initially hidden */
-  margin-right: 10px; /* Add some space between the loader and the trip name */
+  animation: spin 1s linear infinite;
+  display: none;
+  margin-right: 10px;
 }
 
 @keyframes spin {
@@ -455,7 +389,6 @@ div[v-cloak]:not(.hidden) {
   align-items: center;
 }
 
-
 .header {
   top: 0;
   left: 0;
@@ -468,7 +401,7 @@ div[v-cloak]:not(.hidden) {
   box-sizing: border-box;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  transition: background-color 0.3s ease; /* Smooth color transition */
+  transition: background-color 0.3s ease;
 }
 
 h1 {
@@ -496,10 +429,8 @@ h1 {
   color: #ffffff;
 }
 
-
 html,body{
   padding: 0;
   margin: 0;
 }
-
 </style>

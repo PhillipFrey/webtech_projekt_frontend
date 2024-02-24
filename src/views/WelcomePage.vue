@@ -1,23 +1,19 @@
 <template>
   <div class="container">
-    <!-- Header-Bereich -->
     <div class="header">
-      <!-- Logo und Überschrift im Header -->
       <div class="logo">
         <img src="../assets/Logo.png" alt="CompanyLogo" />
         <h1 class="heading">TripPlaner</h1>
       </div>
     </div>
-
-    <!-- Beschreibung -->
-    <div class="description-box">
-      <img src="../assets/Logo.png" alt="CompanyLogo" class="logo-small" />
-      <p class="description">
-        We offer you the opportunity to plan your journey, calculate routes, place markers and conveniently save your destinations! Start with your first trip
-      </p>
+    <div class="description-box-wrapper">
+      <div class="description-box">
+        <img src="../assets/Logo.png" alt="CompanyLogo" class="logo-small" />
+        <p class="description">
+          We offer you the opportunity to plan your journey, calculate routes, place markers and conveniently save your destinations! Start with your first trip
+        </p>
+      </div>
     </div>
-
-    <!-- Formular für Trip-Erstellung -->
     <form @submit.prevent="submitTrip" class="create-trip-form">
       <div class="trip-name">
         <input v-model="tripName" placeholder="Enter Trip name">
@@ -25,39 +21,25 @@
       </div>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
-
-    <!-- Wrapper für die Tabelle und das Formular -->
     <div>
-      <!-- Tabelle für Trip-Namen und IDs -->
       <table>
-        <!-- Der Kopf der Tabelle -->
         <thead>
         <tr>
-          <!-- Tabellenüberschriften -->
           <th>ID</th>
           <th>Name</th>
         </tr>
         </thead>
-        <!-- Der Hauptinhalt der Tabelle -->
         <tbody>
-        <!-- Eine Schleife, die über alle Trips iteriert und eine Zeile für jeden Trip erstellt -->
         <tr v-for="trip in trips" :key="trip.id">
-          <!-- Einträge für jede Trip-ID und Trip-Namen -->
           <td>{{ trip.id }}</td>
           <td>
-            <!-- Ein Container für den Trip-Namen mit Bearbeitungsfunktion -->
             <div class="trip-name-container">
               <router-link :to="`/TripCreation/${trip.id}`">{{ trip.name }}</router-link>
-
-              <!-- Icon zum Bearbeiten des Trip-Namens -->
               <span class="edit-icon" @click="openPopup(trip.id)">&#9881;</span>
-              <!-- Popup für die Bearbeitung des Trip-Namens -->
               <div :id="'popup-' + trip.id" class="popup">
                 <input v-model="editedTripNames[trip.id]" placeholder="Enter New Trip Name">
-                <!-- Ein Eingabefeld für den neuen Trip-Namen -->
                 <button @click="updateTripName(trip.id)">Update Trip Name</button>
                 <button id="delete_button" @click="deleteTrip(trip.id)">Delete Trip</button>
-                <!-- Ein Button, um den Trip-Namen zu aktualisieren -->
               </div>
             </div>
           </td>
@@ -84,7 +66,6 @@ export default {
     const editedTripNames = reactive({});
     const base_url_backend = import.meta.env.VITE_BACKEND_URL;
 
-    // Fetches a list of trips from the server (GetRequest)
     watchEffect(() => {
       axios.get(base_url_backend + '/apiTrip/trips')
           .then((response) => {
@@ -115,22 +96,19 @@ export default {
       }
     }
 
-    // Function to close the popup
     function closePopup(tripId) {
       const popup = document.getElementById(`popup-${tripId}`);
       if (popup) {
-        popup.classList.remove('active'); // Removes the 'active' class to close the popup
+        popup.classList.remove('active');
       }
     }
 
-    // Function to open and close a popup for editing a trip name
     function openPopup(tripId) {
       const popup = document.getElementById(`popup-${tripId}`);
       if (popup) {
         if (popup.classList.contains('active')) {
           popup.classList.remove('active');
         } else {
-          // Close all other popups before opening the current one
           const popups = document.querySelectorAll('.popup');
           popups.forEach((popup) => {
             popup.classList.remove('active');
@@ -193,10 +171,7 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
-
 body {
   background-color: #d90000;
   font-family: 'Arial', sans-serif;
@@ -207,15 +182,6 @@ header {
   margin-bottom: 20px;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  height: 100vh;
-  padding: 20px;
-}
-
 .heading {
   font-family: monospace;
   font-size: 2.5rem;
@@ -223,7 +189,9 @@ header {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
   color: #45a049;
 }
-
+.description-box-wrapper{
+  padding-top: 10rem;
+}
 .description-box {
   background: linear-gradient(to bottom, #ffffff, #eeeeee);
   border-radius: 8px;
@@ -231,15 +199,10 @@ header {
   margin-bottom: 20px;
   border: 2px solid #ccc;
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  max-width: 800px;
+  max-width: 50%;
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  z-index: 999;
- /* transition: transform 0.3s ease;*(
-
-  */
-  /* Stile für den Text */
   font-family: monospace;
   font-size: 1.1rem;
   line-height: 1.6;
@@ -300,14 +263,13 @@ button {
   background-color: #45a049;
   color: white;
   cursor: pointer;
-  transition: transform 0.3s ease; /* Hinzugefügter Hover-Effekt */
+  transition: transform 0.3s ease;
 }
 
 .create-trip-form button:hover {
-  transform: scale(1.02); /* Vergrößere den Button beim Hover */
+  transform: scale(1.02);
 }
 
-/* Gesamtes Tabellen-Design */
 table {
   font-family: monospace;
   background-color: white;
@@ -316,12 +278,10 @@ table {
   border-collapse: separate;
   border-spacing: 0;
   max-height: 200px;
-  overflow-y: auto;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Einheitliches Design für Tabellenzellen */
 table,
 th,
 td {
@@ -330,7 +290,6 @@ td {
   text-align: left;
 }
 
-/*Tabellen Überschrift*/
 th {
   background-color: #f2f2f2;
   font-weight: bold;
@@ -351,7 +310,6 @@ td:first-child {
   pointer-events: none;
 }
 
-/* Weitere Stile für das Bearbeitungssymbol und das Popup-Fenster */
 .edit-icon {
   cursor: pointer;
   color: #45a049;
@@ -371,12 +329,10 @@ td:first-child {
   border-radius: 5px;
   padding: 5px;
   z-index: 999;
-
 }
 
 .popup.active {
   display: block;
-
 }
 
 .header {
@@ -392,7 +348,7 @@ td:first-child {
   box-sizing: border-box;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  transition: background-color 0.3s ease; /* Smooth color transition */
+  transition: background-color 0.3s ease;
 }
 
 .header .logo {
