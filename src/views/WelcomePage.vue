@@ -26,8 +26,8 @@
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
 
-    <!-- Wrapper für die Tabelle und das Formular//----------- Hier hats klick gemacht !!!!!!!!!-->
-
+    <!-- Wrapper für die Tabelle und das Formular -->
+    <div>
       <!-- Tabelle für Trip-Namen und IDs -->
       <table>
         <!-- Der Kopf der Tabelle -->
@@ -47,8 +47,7 @@
           <td>
             <!-- Ein Container für den Trip-Namen mit Bearbeitungsfunktion -->
             <div class="trip-name-container">
-              <router-link :to="`/TripCreation/${trip.id}`">{{ trip.name }}</router-link>  <!-- Hier wird der Name inkls. attribut abgespeichert  -->
-
+              <router-link :to="`/TripCreation/${trip.id}`">{{ trip.name }}</router-link>
 
               <!-- Icon zum Bearbeiten des Trip-Namens -->
               <span class="edit-icon" @click="openPopup(trip.id)">&#9881;</span>
@@ -66,127 +65,134 @@
         </tbody>
       </table>
     </div>
+  </div>
   <h1 class="authors">Developed by Phillip Frey (https://github.com/PhillipFrey) and Alexander Bürklen (https://github.com/AlexBuerklenHTW)</h1>
 </template>
 
-<script setup lang="ts">
+<script>
+import { ref, reactive, watchEffect } from 'vue';
 import axios from 'axios';
-import {ref} from 'vue';
-import { type Ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
-// Definition eines Typs für einen Trip der erstellt wird
-type Trip = {
-  id: string;
-  name: string;
-}
+export default {
+  setup() {
+    const trips = ref([]);
+    const tripName = ref('');
+    const errorMessage = ref('');
+    const router = useRouter();
+    const editedTripNames = reactive({});
+    const base_url_backend = import.meta.env.VITE_BACKEND_URL;
 
-//reaktive Variablen
-let trips: Ref<Trip[]> = ref([]);
-let tripName: Ref<string> = ref('');
-let errorMessage: Ref<string> = ref('');
-let router = useRouter();
-let editedTripNames: Record<string, string> = {};
-const base_url_backend = import.meta.env.VITE_BACKEND_URL
-
-
-// ruft eine Liste von Trips ab, welche vom Server gezogen werden (GetRequest)
-axios
-    .get(base_url_backend + '/apiTrip/trips')
-    .then((response) => {
-      trips.value = response.data;
+    // Fetches a list of trips from the server (GetRequest)
+    watchEffect(() => {
+      axios.get(base_url_backend + '/apiTrip/trips')
+          .then((response) => {
+            trips.value = response.data;
+          });
     });
 
-
-function updateTripName(tripId: string) {
-  const newTripName = editedTripNames[tripId].trim()
-  if (newTripName === '') {
-    return Swal.fire({
-      title: 'Error!',
-      text: 'Please enter a name for the trip',
-      icon: 'error'
-    })
-  }
-  const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
-  if (tripIndex !== -1) {
-    axios
-        .post(base_url_backend + `/apiTrip/tripsName/${tripId}`, newTripName)
-        .then(() => {
-          trips.value[tripIndex].name = newTripName;
-          closePopup(tripId);
-          console.log(trips)
-        })
-        .catch((error) => {
-          console.error('Error updating trip name:', error);
+    function updateTripName(tripId) {
+      const newTripName = editedTripNames[tripId].trim();
+      if (newTripName === '') {
+        return Swal.fire({
+          title: 'Error!',
+          text: 'Please enter a name for the trip',
+          icon: 'error'
         });
-  }
-}
-
-
-// Funktion zum Schließen des Popups
-function closePopup(tripId: string) {
-  const popup = document.getElementById(`popup-${tripId}`);
-  if (popup) {
-    popup.classList.remove('active'); // Entfernt die 'active'-Klasse, um das Popup zu schließen
-  }
-}
-
-// Funktion, um ein Popup für die Bearbeitung eines Trip-Namens zu öffnen und zu schließen
-function openPopup(tripId: string) {
-  const popup = document.getElementById(`popup-${tripId}`);
-  if (popup) {
-    if (popup.classList.contains('active')) {
-      popup.classList.remove('active');
-    } else {
-      // Schließe alle anderen Popups vor dem Öffnen des aktuellen Popups
-      const popups = document.querySelectorAll('.popup');
-      popups.forEach((popup) => {
-        popup.classList.remove('active');
-      });
-      popup.classList.add('active');
+      }
+      const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
+      if (tripIndex !== -1) {
+        axios.post(base_url_backend + `/apiTrip/tripsName/${tripId}`, newTripName)
+            .then(() => {
+              trips.value[tripIndex].name = newTripName;
+              closePopup(tripId);
+              console.log(trips);
+            })
+            .catch((error) => {
+              console.error('Error updating trip name:', error);
+            });
+      }
     }
-  }
-}
 
-function deleteTrip(tripId: string){
-  const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
-  if (tripIndex !== -1) {
-    try {
-      axios.delete(base_url_backend + `/apiTrip/trips/${tripId}`)
-      trips.value.splice(tripIndex, 1)
+    // Function to close the popup
+    function closePopup(tripId) {
+      const popup = document.getElementById(`popup-${tripId}`);
+      if (popup) {
+        popup.classList.remove('active'); // Removes the 'active' class to close the popup
+      }
     }
-    catch (error) {
-      alert("Delete trip was not successful")
+
+    // Function to open and close a popup for editing a trip name
+    function openPopup(tripId) {
+      const popup = document.getElementById(`popup-${tripId}`);
+      if (popup) {
+        if (popup.classList.contains('active')) {
+          popup.classList.remove('active');
+        } else {
+          // Close all other popups before opening the current one
+          const popups = document.querySelectorAll('.popup');
+          popups.forEach((popup) => {
+            popup.classList.remove('active');
+          });
+          popup.classList.add('active');
+        }
+      }
     }
-    closePopup(tripId)
-  }
-}
 
-// Funktion zum Erstellen eines neuen Trips
-function submitTrip(event: Event) {
-  event.preventDefault();
-//regex = check if whitespace is in tripName.value
-  if (tripName.value === '' || /^\s*$/) {
-    return Swal.fire({
-     title: 'Error!',
-     text: 'Please enter a name for the trip',
-     icon: 'error'
-    })
-  }
+    function deleteTrip(tripId) {
+      const tripIndex = trips.value.findIndex((trip) => trip.id === tripId);
+      if (tripIndex !== -1) {
+        try {
+          axios.delete(base_url_backend + `/apiTrip/trips/${tripId}`);
+          trips.value.splice(tripIndex,  1);
+        } catch (error) {
+          alert("Delete trip was not successful");
+        }
+        closePopup(tripId);
+      }
+    }
 
-  axios
-      .post(base_url_backend + '/apiTrip/trips', { name: tripName.value })
-      .then((response) => {
-        tripName.value = '';
-        trips.value = [...trips.value, response.data];
-        router.push(`/TripCreation/${response.data.id}`);
-      })
-      .catch((error) => {
-        console.error('Error creating trip:', error);
-      });
-}
+    // Function to create a new trip
+    function submitTrip(event) {
+      event.preventDefault();
+      //regex = check if whitespace is in tripName.value
+      if (tripName.value === '' || /^\s*$/) {
+        return Swal.fire({
+          title: 'Error!',
+          text: 'Please enter a name for the trip',
+          icon: 'error'
+        });
+      }
+
+      axios.post(base_url_backend + '/apiTrip/trips', { name: tripName.value })
+          .then((response) => {
+            tripName.value = '';
+            trips.value = [...trips.value, response.data];
+            router.push(`/TripCreation/${response.data.id}`);
+          })
+          .catch((error) => {
+            console.error('Error creating trip:', error);
+          });
+    }
+
+    return {
+      trips,
+      tripName,
+      errorMessage,
+      router,
+      editedTripNames,
+      base_url_backend,
+      updateTripName,
+      closePopup,
+      openPopup,
+      deleteTrip,
+      submitTrip
+    };
+  }
+};
 </script>
+
 
 
 <style scoped>

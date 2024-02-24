@@ -96,8 +96,6 @@ import {GeoJSON} from 'ol/format';
 import {arcgisToGeoJSON} from "@terraformer/arcgis"
 import Swal from 'sweetalert2'
 
-
-
 export default {
   setup() {
     const route = useRoute();
@@ -117,7 +115,7 @@ export default {
     let totalLength = ref(0);
     const tripName = ref("");
     const notification = ref('');
-    const base_url_backend = import.meta.env.VITE_BACKEND_URL
+    const base_url_backend = import.meta.env.VITE_BACKEND_URL;
 
     const getMarkerData = async () => {
       let path = window.location.pathname;
