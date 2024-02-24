@@ -59,12 +59,12 @@ import Swal from 'sweetalert2';
 
 export default {
   setup() {
-    const trips = ref([]);
+    const trips = ref();
     const tripName = ref('');
     const errorMessage = ref('');
     const router = useRouter();
     const editedTripNames = reactive({});
-    const base_url_backend = import.meta.env.VITE_BACKEND_URL;
+    const base_url_backend = import.meta.env.VITE_BACKEND_BASE_URL;
 
     watchEffect(() => {
       axios.get(base_url_backend + '/apiTrip/trips')
@@ -131,18 +131,16 @@ export default {
       }
     }
 
-    // Function to create a new trip
     function submitTrip(event) {
       event.preventDefault();
       //regex = check if whitespace is in tripName.value
-      if (tripName.value === '' || /^\s*$/) {
+      if (tripName.value === '' || /^\s*$/.test(tripName.value)) {
         return Swal.fire({
           title: 'Error!',
           text: 'Please enter a name for the trip',
           icon: 'error'
         });
       }
-
       axios.post(base_url_backend + '/apiTrip/trips', { name: tripName.value })
           .then((response) => {
             tripName.value = '';
