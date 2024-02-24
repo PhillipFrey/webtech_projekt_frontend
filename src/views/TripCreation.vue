@@ -134,7 +134,7 @@ export default {
       };
 
       const sendCoordinates = async () => {
-        const response = await axios.post(base_url_backend +  + `/apiMarker/markers?tripId=${tripId}`, {
+        const response = await axios.post(base_url_backend + `/apiMarker/markers?tripId=${tripId}`, {
           lat: markerCoordinates.value.latitude,
           lng: markerCoordinates.value.longitude,
           tripId: tripId
