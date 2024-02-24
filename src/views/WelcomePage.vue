@@ -64,7 +64,7 @@ export default {
     const errorMessage = ref('');
     const router = useRouter();
     const editedTripNames = reactive({});
-    const base_url_backend = import.meta.env.VITE_BACKEND_BASE_URL;
+    const base_url_backend = import.meta.env.VITE_BACKEND_URL;
 
     watchEffect(() => {
       axios.get(base_url_backend + '/apiTrip/trips')
