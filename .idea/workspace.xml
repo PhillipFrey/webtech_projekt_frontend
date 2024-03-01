@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/TripCreation.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/WelcomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/WelcomePage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.spec.js" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
     <list id="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" name="Changes by phillipfrey" comment="" />
@@ -35,6 +34,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -44,31 +46,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "18.18.0",
-    "javascript.nodejs.core.library.typings.version": "18.18.0",
-    "jdk.selected.JAVA_MODULE": "20",
-    "last_opened_file_path": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/webtechProjekt",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend/Vue/node_modules/jest",
-    "nodejs_interpreter_path": "C:/Program Files/nodejs/node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.18.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.18.0&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;20&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/webtechProjekt&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/Alexa/Desktop/Dokumente/Alex/HTW/5_semester/webtech/Webtech_Frontend/node_modules/jest&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;C:/Program Files/nodejs/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Alexa\Desktop\Dokumente\Alex\HTW\5_semester\webtech\Webtech_Frontend" />
@@ -78,64 +80,82 @@
       <recent name="C:\Users\Alexa\Desktop\Dokumente\Alex\HTW\5_semester\webtech\Webtech_Frontend\Vue\cypress\e2e" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build">
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="build" />
-      </scripts>
+  <component name="RunManager" selected="Vitest.WelcomePage.form input updates on user input">
+    <configuration name="TripCreation" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
       <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/test/TripCreation.spec.js" />
+      <test-names>
+        <test-name value="TripCreation" />
+      </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="lint" />
-      </scripts>
+    <configuration name="TripCreation.displays marker information correctly" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
       <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/test/TripCreation.spec.js" />
+      <test-names>
+        <test-name value="TripCreation" />
+        <test-name value="displays marker information correctly" />
+      </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start" />
-      </scripts>
+    <configuration name="TripCreation.testing getMarkerData function" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
       <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/test/TripCreation.spec.js" />
+      <test-names>
+        <test-name value="TripCreation" />
+        <test-name value="testing getMarkerData function" />
+      </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="test:unit" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="test:unit" />
-      </scripts>
+    <configuration name="WelcomePage (1)" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
       <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/test/test.spec.js" />
+      <test-names>
+        <test-name value="WelcomePage" />
+      </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="type-check" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="type-check" />
-      </scripts>
+    <configuration name="WelcomePage.form input updates on user input" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
       <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/test/test.spec.js" />
+      <test-names>
+        <test-name value="WelcomePage" />
+        <test-name value="form input updates on user input" />
+      </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build" />
-        <item itemvalue="npm.type-check" />
-        <item itemvalue="npm.lint" />
-        <item itemvalue="npm.test:unit" />
-        <item itemvalue="npm.start" />
+        <item itemvalue="Vitest.WelcomePage.form input updates on user input" />
+        <item itemvalue="Vitest.WelcomePage (1)" />
+        <item itemvalue="Vitest.TripCreation" />
+        <item itemvalue="Vitest.TripCreation.testing getMarkerData function" />
+        <item itemvalue="Vitest.TripCreation.displays marker information correctly" />
       </list>
     </recent_temporary>
   </component>
@@ -232,7 +252,18 @@
       <workItem from="1708724044161" duration="1303000" />
       <workItem from="1708725426378" duration="605000" />
       <workItem from="1708753805061" duration="4276000" />
-      <workItem from="1708781139847" duration="2046000" />
+      <workItem from="1708781139847" duration="3307000" />
+      <workItem from="1709047822261" duration="1467000" />
+      <workItem from="1709049961872" duration="3692000" />
+      <workItem from="1709053998020" duration="3101000" />
+      <workItem from="1709064482167" duration="520000" />
+      <workItem from="1709146577069" duration="3228000" />
+      <workItem from="1709154807337" duration="2071000" />
+      <workItem from="1709223352191" duration="3553000" />
+      <workItem from="1709228247986" duration="10000" />
+      <workItem from="1709292737721" duration="4000" />
+      <workItem from="1709293845567" duration="159000" />
+      <workItem from="1709294310416" duration="410000" />
     </task>
     <servers />
   </component>
