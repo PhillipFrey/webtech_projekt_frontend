@@ -8,14 +8,24 @@ const router = createRouter({
     {
       path: '/',
       name: 'welcomePage',
-      component: WelcomePage
+      component: WelcomePage,
+      meta: {
+        title: 'Trip Planer - Welcome Page'
+      }
     },
     {
       path: "/TripCreation/:id",
       name: "tripCreation",
-      component: TripCreation
+      component: TripCreation,
+      meta: {
+        title: 'Trip Planer - Trip Creation'
+      }
     }
   ]
 });
+
+router.beforeEach((to, from) => {
+  document.title = to.meta?.title ?? 'Default Title'
+})
 
 export default router;
