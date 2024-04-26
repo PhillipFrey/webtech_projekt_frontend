@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/TripCreation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Fallback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Fallback.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/WelcomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/WelcomePage.vue" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
@@ -78,7 +77,7 @@
     "npm.lint.executor": "Run",
     "npm.test:unit.executor": "Run",
     "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -284,7 +283,8 @@
       <workItem from="1712406437704" duration="1176000" />
       <workItem from="1713251471783" duration="438000" />
       <workItem from="1713283140791" duration="235000" />
-      <workItem from="1714137865478" duration="4521000" />
+      <workItem from="1714137865478" duration="5445000" />
+      <workItem from="1714152367397" duration="1431000" />
     </task>
     <servers />
   </component>

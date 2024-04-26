@@ -207,7 +207,6 @@ header {
 
 p.description {
   margin: 0;
-  color: #000000;
 }
 
 input {
