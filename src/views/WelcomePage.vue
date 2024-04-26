@@ -88,7 +88,6 @@ export default {
             .then(() => {
               trips.value[tripIndex].name = newTripName;
               closePopup(tripId);
-              console.log(trips);
             })
             .catch((error) => {
               console.error('Error updating trip name:', error);
@@ -160,7 +159,6 @@ export default {
       editedTripNames,
       base_url_backend,
       updateTripName,
-      closePopup,
       openPopup,
       deleteTrip,
       submitTrip

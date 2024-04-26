@@ -65,10 +65,11 @@
 import markerIcon from "../assets/markerIcon.png"
 import {onMounted, ref} from "vue";
 import axios from 'axios';
-import {useRoute} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import {GeoJSON} from 'ol/format';
 import {arcgisToGeoJSON} from "@terraformer/arcgis"
 import Swal from 'sweetalert2'
+import Fallback from "@/components/Fallback.vue";
 
 export default {
   setup() {
@@ -90,12 +91,19 @@ export default {
     const tripName = ref("");
     const notification = ref('');
     const base_url_backend = import.meta.env.VITE_BACKEND_URL;
+    const router = useRouter()
 
     const getMarkerData = async () => {
       let path = window.location.pathname;
       let id = path.substring(path.lastIndexOf('/') + 1);
       await axios.get(base_url_backend + `/apiTrip/trips/${id}`)
-          .then((response) => { trips.value = response.data })}
+          .then((response) => { trips.value = response.data })
+          .catch(function (error){
+            if(error.response){
+              router.replace({name: 'fallbackBase'})
+            }
+          })}
+
     onMounted(async () => {
       vectors.value.source.clear();
       await getMarkerData();
@@ -112,8 +120,7 @@ export default {
       totalLength.value = trips.value.totalDistance
       tripName.value = trips.value.name
     })
-    console.log(markers)
-    console.log(markersId.value)
+
 
     const renameMarkers = () => {
       markers.value.forEach((marker, index) => {
@@ -149,8 +156,7 @@ export default {
         markers.value.push(newMarker);
       };
       notification.value = 'Conditions have changed. Recalculate route to show new total distance';
-      console.log(markers)
-      console.log(markersId)
+
       await sendCoordinates();
       vectors.value.source.clear();
     };
@@ -177,7 +183,6 @@ export default {
       const stops = markers.value.map(marker => `${marker.latitude},${marker.longitude}`).join(';');
       try {
         const response = await axios.get(`https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?f=json&token=${apiKey}&stops=${stops}`);
-        console.log(response)
         if (response.data.messages.some(message => message.code === -2147201018)) {
           await Swal.fire({
             title: 'Error!',
@@ -232,8 +237,6 @@ export default {
     const deleteMarker = async (marker) => {
       vectors.value.source.clear();
       await clearRoutes();
-      console.log(markers);
-      console.log(marker);
       const index = markers.value.findIndex(m => m.id === marker.id);
       if (index !== -1) {
         markers.value.splice(index, 1);
@@ -341,7 +344,7 @@ div[v-cloak] {
   display: none;
 }
 
-div[v-cloak]:not(.hidden) {
+div[v-cloak]:not() {
   display: block;
 }
 
