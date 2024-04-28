@@ -23,12 +23,13 @@ const router = createRouter({
       }
     },
     {
+      path: "/Fallback",
+      name: "fallback",
+      component: Fallback
+    },
+    {
       path: '/:pathMatch(.*)*',
-      name: 'fallbackBase',
-      component: Fallback,
-      meta: {
-        title: 'Trip Planer - Fallback'
-      }
+      redirect: '/'
     }
   ]
 });

@@ -100,7 +100,7 @@ export default {
           .then((response) => { trips.value = response.data })
           .catch(function (error){
             if(error.response){
-              router.replace({name: 'fallbackBase'})
+              router.replace({name: 'fallback'})
             }
           })}
 
