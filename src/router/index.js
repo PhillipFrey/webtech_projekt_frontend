@@ -4,7 +4,7 @@ import TripCreation from '../views/TripCreation.vue';
 import Fallback from "../views/Fallback.vue";
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.VITE_BACKEND_URL),
   routes: [
     {
       path: '/',
@@ -34,8 +34,8 @@ const router = createRouter({
   ]
 });
 
-router.beforeEach((to, from) => {
-  document.title = to.meta?.title ?? 'Default Title'
+router.beforeEach((to) => {
+  document.title = to.meta?.title ?? 'Default Title';
 })
 
 export default router;

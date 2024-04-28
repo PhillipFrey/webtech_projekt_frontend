@@ -7,7 +7,6 @@
     <list default="true" id="cee74f19-3e19-40fd-8741-452baf294b06" name="Changes" comment="Revert &quot;update&quot;&#10;&#10;This reverts commit 2110623e">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/TripCreation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/TripCreation.vue" afterDir="false" />
     </list>
     <list id="14e3de1e-37f9-4d30-a36d-1df4c7ab1b93" name="Changes by marwin.moellers" comment="" />
     <list id="c5d8bd6b-e7cf-4e9b-ba82-e063e0d12ede" name="Changes by phillipfrey" comment="" />
@@ -285,7 +284,7 @@
       <workItem from="1714152367397" duration="1677000" />
       <workItem from="1714298808006" duration="35000" />
       <workItem from="1714300209962" duration="100000" />
-      <workItem from="1714300665313" duration="6513000" />
+      <workItem from="1714300665313" duration="7175000" />
     </task>
     <servers />
   </component>
