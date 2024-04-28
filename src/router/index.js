@@ -15,27 +15,11 @@ const router = createRouter({
       }
     },
     {
-      path: "/TripCreation/:id*",
-      name: "fallbackId",
-      component: Fallback,
-      meta: {
-        title: "Trip Planer - Fallback"
-      }
-    },
-    {
       path: "/TripCreation/:id",
       name: "tripCreation",
       component: TripCreation,
       meta: {
         title: 'Trip Planer - Trip Creation'
-      }
-    },
-    {
-      path: "/Fallback",
-      name: "fallbackBase",
-      component: Fallback,
-      meta: {
-        title: 'Trip Planer - Fallback'
       }
     },
     {
