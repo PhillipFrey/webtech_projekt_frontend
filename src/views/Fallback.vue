@@ -6,11 +6,16 @@
   </div>
 </template>
 
-<script setup>
-// eslint-disable-next-line no-unused-vars
-import welcomePage from "@/views/WelcomePage.vue";
+<script>
 import {useRouter} from "vue-router";
-const router = useRouter()
+export default{
+  setup(){
+    const router = useRouter()
+    return {
+      router
+    }
+  }
+}
 </script>
 
 <style scoped>

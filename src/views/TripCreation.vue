@@ -69,7 +69,7 @@ import {useRoute, useRouter} from 'vue-router';
 import {GeoJSON} from 'ol/format';
 import {arcgisToGeoJSON} from "@terraformer/arcgis"
 import Swal from 'sweetalert2'
-import Fallback from "@/components/Fallback.vue";
+
 
 export default {
   setup() {
