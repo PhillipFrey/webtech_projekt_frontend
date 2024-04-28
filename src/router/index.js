@@ -4,7 +4,7 @@ import TripCreation from '../views/TripCreation.vue';
 import Fallback from "../views/Fallback.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_BACKEND_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
