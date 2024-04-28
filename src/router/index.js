@@ -1,10 +1,10 @@
-import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import WelcomePage from '../views/WelcomePage.vue';
 import TripCreation from '../views/TripCreation.vue';
 import Fallback from "../views/Fallback.vue";
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
